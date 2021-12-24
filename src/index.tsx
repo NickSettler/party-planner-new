@@ -3,13 +3,17 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import { Provider } from "react-redux";
 import store from "./modules/store";
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "./helpers/theme/theme";
 
 ReactDOM.render(
-  <Provider store={store}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </Provider>,
+  <ThemeProvider theme={theme}>
+    <Provider store={store}>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </Provider>
+  </ThemeProvider>,
   document.getElementById("root")
 );
 
