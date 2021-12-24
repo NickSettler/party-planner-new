@@ -1,11 +1,14 @@
 import { connect } from "react-redux";
-import AppBar from "@mui/material/AppBar";
-import { HeaderTitle, HeaderToolbar } from "./styled-components/Header";
+import {
+  HeaderAppBar,
+  HeaderTitle,
+  HeaderToolbar,
+} from "./styled-components/Header";
 import LinkButton from "../../uikit/LinkButton/LinkButton";
 
 const Header = (): JSX.Element => {
   return (
-    <AppBar position={"static"}>
+    <HeaderAppBar position={"static"}>
       <HeaderToolbar>
         <HeaderTitle to={"/"} variant={"h6"} color={"inherit"}>
           Party Manager
@@ -17,7 +20,7 @@ const Header = (): JSX.Element => {
           Sign Up
         </LinkButton>
       </HeaderToolbar>
-    </AppBar>
+    </HeaderAppBar>
   );
 };
 
