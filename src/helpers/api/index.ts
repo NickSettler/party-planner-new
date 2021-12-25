@@ -1,4 +1,5 @@
 import { Directus, DirectusOptions } from "@directus/sdk";
+import { LOCAL_STORAGE_KEYS } from "../localStorage/consts";
 
 export default class Api extends Directus<any> {
   private static _instance: Api;
@@ -13,10 +14,16 @@ export default class Api extends Directus<any> {
       Api._instance = new Api(Api._baseUrl, {
         auth: {
           autoRefresh: true,
-          // mode: "json",
+          mode: "cookie",
         },
       });
     }
     return Api._instance;
+  }
+
+  public logout(): Promise<void> {
+    localStorage.removeItem(LOCAL_STORAGE_KEYS.AUTH_TOKEN);
+    localStorage.removeItem(LOCAL_STORAGE_KEYS.AUTH_EXPIRES);
+    return this.auth.logout();
   }
 }
