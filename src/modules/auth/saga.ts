@@ -1,4 +1,4 @@
-import { put, select, takeEvery } from "redux-saga/effects";
+import { fork, put, select, takeEvery } from "redux-saga/effects";
 import {
   actionTypes,
   setSignInRequestCompleted,
@@ -10,12 +10,21 @@ import { signInRequestLoading } from "./selectors";
 import { AnyAction } from "@reduxjs/toolkit";
 import { setUserToken } from "../user";
 import { AuthResult } from "@directus/sdk";
+import { LOCAL_STORAGE_KEYS } from "../../helpers/localStorage/consts";
 
 export function* authSaga() {
+  yield fork(authInitWorker);
+
   yield takeEvery(actionTypes.RUN_SIGN_IN_REQUEST, signInRequestWorker);
 }
 
-export function* signInRequestWorker({ payload }: AnyAction) {
+function* authInitWorker() {
+  const token = localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_TOKEN);
+
+  if (token) yield put(setUserToken(token));
+}
+
+function* signInRequestWorker({ payload }: AnyAction) {
   const isRequestRunning: boolean = yield select(signInRequestLoading);
 
   if (isRequestRunning) return;
