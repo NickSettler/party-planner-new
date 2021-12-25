@@ -21,9 +21,14 @@ export default class Api extends Directus<any> {
     return Api._instance;
   }
 
-  public logout(): Promise<void> {
-    localStorage.removeItem(LOCAL_STORAGE_KEYS.AUTH_TOKEN);
-    localStorage.removeItem(LOCAL_STORAGE_KEYS.AUTH_EXPIRES);
-    return this.auth.logout();
+  public logout() {
+    return this.auth
+      .logout()
+      .then((response) => ({ response }))
+      .catch((error) => ({ error }))
+      .finally(() => {
+        localStorage.removeItem(LOCAL_STORAGE_KEYS.AUTH_TOKEN);
+        localStorage.removeItem(LOCAL_STORAGE_KEYS.AUTH_EXPIRES);
+      });
   }
 }
