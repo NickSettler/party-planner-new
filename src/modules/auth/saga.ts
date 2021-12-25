@@ -40,12 +40,14 @@ export function* signInRequestWorker({ payload }: AnyAction) {
   } else {
     yield put(setSignInRequestCompleted(true));
 
-    const cred = new PasswordCredential({
-      id: email,
-      password,
-    });
+    if (navigator.credentials) {
+      const cred = new PasswordCredential({
+        id: email,
+        password,
+      });
 
-    yield navigator.credentials.store(cred);
+      yield navigator.credentials.store(cred);
+    }
 
     yield put(setUserToken(response.access_token));
   }

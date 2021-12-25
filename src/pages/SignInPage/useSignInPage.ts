@@ -19,17 +19,18 @@ const useSignInPage = ({
   const handleFocus = useCallback(() => {
     if (!credentialsSuggested) {
       setCredentialsSuggested(true);
-      navigator.credentials
-        .get({
-          // @ts-ignore
-          password: true,
-        })
-        .then((credentials) => {
-          if (credentials && credentials.type === "password") {
+      if (navigator.credentials)
+        navigator.credentials
+          .get({
             // @ts-ignore
-            runSignInRequest(credentials.id, credentials.password!);
-          }
-        });
+            password: true,
+          })
+          .then((credentials) => {
+            if (credentials && credentials.type === "password") {
+              // @ts-ignore
+              runSignInRequest(credentials.id, credentials.password!);
+            }
+          });
     }
   }, [credentialsSuggested, runSignInRequest]);
 
