@@ -37,3 +37,37 @@ export const signInRequestFailedSelector = createSelector(
   (state: AuthModuleT) =>
     !state.signInRequestStarted && !!state.signInRequestError
 );
+
+export const signOutRequestStartedSelector = createSelector(
+  [authModule],
+  (state: AuthModuleT) => state.signOutRequestStarted
+);
+
+export const signOutRequestCompletedSelector = createSelector(
+  [authModule],
+  (state: AuthModuleT) => state.signOutRequestCompleted
+);
+
+export const signOutRequestErrorSelector = createSelector(
+  [authModule],
+  (state: AuthModuleT) => state.signOutRequestError
+);
+
+export const signOutRequestLoading = createSelector(
+  [authModule],
+  (state: AuthModuleT) =>
+    state.signOutRequestStarted &&
+    !(state.signOutRequestCompleted || state.signOutRequestError)
+);
+
+export const signOutRequestSuccessSelector = createSelector(
+  [authModule],
+  (state: AuthModuleT) =>
+    !state.signOutRequestStarted && state.signOutRequestCompleted
+);
+
+export const signOutRequestFailedSelector = createSelector(
+  [authModule],
+  (state: AuthModuleT) =>
+    !state.signOutRequestStarted && !!state.signOutRequestError
+);

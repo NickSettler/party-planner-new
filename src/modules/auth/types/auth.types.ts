@@ -6,4 +6,8 @@ export type AuthModuleT = {
   signUpRequestStarted: boolean;
   signUpRequestCompleted: boolean;
   signUpRequestError: string;
+
+  signOutRequestStarted: boolean;
+  signOutRequestCompleted: boolean;
+  signOutRequestError: string;
 };

@@ -4,11 +4,17 @@ import {
   setSignInRequestCompleted,
   setSignInRequestError,
   setSignInRequestStarted,
+  setSignOutRequestCompleted,
+  setSignOutRequestError,
+  setSignOutRequestStarted,
 } from "./actions";
 import Api from "../../helpers/api";
-import { signInRequestLoading } from "./selectors";
+import {
+  signInRequestLoading,
+  signOutRequestStartedSelector,
+} from "./selectors";
 import { AnyAction } from "@reduxjs/toolkit";
-import { setUserToken } from "../user";
+import { setUserId, setUserToken } from "../user";
 import { AuthResult } from "@directus/sdk";
 import { LOCAL_STORAGE_KEYS } from "../../helpers/localStorage/consts";
 
@@ -16,6 +22,7 @@ export function* authSaga() {
   yield fork(authInitWorker);
 
   yield takeEvery(actionTypes.RUN_SIGN_IN_REQUEST, signInRequestWorker);
+  yield takeEvery(actionTypes.RUN_SIGN_OUT_REQUEST, signOutRequestWorker);
 }
 
 function* authInitWorker() {
@@ -59,5 +66,26 @@ function* signInRequestWorker({ payload }: AnyAction) {
     }
 
     yield put(setUserToken(response.access_token));
+  }
+}
+
+function* signOutRequestWorker() {
+  const isRequestRunning: boolean = yield select(signOutRequestStartedSelector);
+
+  if (isRequestRunning) return;
+
+  yield put(setSignOutRequestStarted(true));
+
+  const { error } = yield Api.getInstance().logout();
+
+  yield put(setSignOutRequestStarted(false));
+
+  if (error) {
+    yield put(setSignOutRequestError("Error while signing out"));
+  } else {
+    yield put(setSignOutRequestCompleted(true));
+
+    yield put(setUserId(""));
+    yield put(setUserToken(""));
   }
 }

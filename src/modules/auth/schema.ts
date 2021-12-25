@@ -8,4 +8,8 @@ export const AuthModuleState: AuthModuleT = {
   signUpRequestStarted: false,
   signUpRequestCompleted: false,
   signUpRequestError: "",
+
+  signOutRequestStarted: false,
+  signOutRequestCompleted: false,
+  signOutRequestError: "",
 };
