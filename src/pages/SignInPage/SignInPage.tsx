@@ -14,7 +14,12 @@ import Container from "@mui/material/Container";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
-import { SignInActions, SignInBox, SignInForm } from "./styled/SignInPage";
+import {
+  SignInActions,
+  SignInBox,
+  SignInForm,
+  SignUpLink,
+} from "./styled/SignInPage";
 import { userLoggedSelector } from "../../modules/user";
 import { Navigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
@@ -87,6 +92,10 @@ const SignInPage = (props: SignInPagePropsT): JSX.Element => {
             </SignInActions>
           </Card>
         </SignInForm>
+        <Typography>
+          If you don't have an account, you can{" "}
+          <SignUpLink to={"/signup"}>sign up</SignUpLink>
+        </Typography>
       </SignInBox>
     </Container>
   );
