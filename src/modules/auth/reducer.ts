@@ -11,7 +11,6 @@ const reducer = (
     case actionTypes.RUN_SIGN_IN_REQUEST:
       return {
         ...state,
-        signInRequestStarted: true,
         signInRequestCompleted: false,
         signInRequestError: "",
       };
