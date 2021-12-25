@@ -4,9 +4,14 @@ import LinkButton from "../../uikit/LinkButton/LinkButton";
 import { userLoggedSelector } from "../../modules/user";
 import { Dispatch } from "@reduxjs/toolkit";
 import { HeaderPropsT } from "./types/Header.types";
+import { runSignOutRequest } from "../../modules/auth";
+import useHeader from "./useHeader";
+import Button from "@mui/material/Button";
 
 const Header = (props: HeaderPropsT): JSX.Element => {
   const { userLogged } = props;
+
+  const { handleSignOutClick } = useHeader(props);
 
   return (
     <HeaderAppBar position={"static"}>
@@ -15,9 +20,13 @@ const Header = (props: HeaderPropsT): JSX.Element => {
           Party Manager
         </HeaderTitle>
         {userLogged ? (
-          <LinkButton to={"/logout"} color={"inherit"}>
-            Logout
-          </LinkButton>
+          <Button
+            variant={"text"}
+            color={"inherit"}
+            onClick={handleSignOutClick}
+          >
+            Sign Out
+          </Button>
         ) : (
           <>
             <LinkButton to={"/signin"} variant={"text"} color={"inherit"}>
@@ -37,6 +46,8 @@ const mapStateToProps = (state: any) => ({
   userLogged: userLoggedSelector(state),
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  runSignOut: () => dispatch(runSignOutRequest()),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
