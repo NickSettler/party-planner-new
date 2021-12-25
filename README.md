@@ -1,4 +1,5 @@
 [![Node.js CI](https://github.com/NickSettler/party-planner-new/actions/workflows/node.js.yml/badge.svg)](https://github.com/NickSettler/party-planner-new/actions/workflows/node.js.yml)
+[![Softacheck](https://softacheck.com/app/repository/NickSettler/party-planner-new/badge)](https://softacheck.com/app/repository/NickSettler/party-planner-new/issues)
 
 # Getting Started with Create React App
 
