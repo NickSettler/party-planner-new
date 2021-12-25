@@ -12,7 +12,10 @@ export const HeaderToolbar = styled(Toolbar)({
 });
 
 export const HeaderTitle = styled(LinkTypography)({
-  flexGrow: 1,
   cursor: "pointer",
   userSelect: "none",
+});
+
+export const HeaderSpacer = styled("div")({
+  flexGrow: 1,
 });

@@ -1,5 +1,10 @@
 import { connect } from "react-redux";
-import { HeaderAppBar, HeaderTitle, HeaderToolbar } from "./styled/Header";
+import {
+  HeaderAppBar,
+  HeaderSpacer,
+  HeaderTitle,
+  HeaderToolbar,
+} from "./styled/Header";
 import LinkButton from "../../uikit/LinkButton/LinkButton";
 import { userLoggedSelector } from "../../modules/user";
 import { Dispatch } from "@reduxjs/toolkit";
@@ -19,6 +24,7 @@ const Header = (props: HeaderPropsT): JSX.Element => {
         <HeaderTitle to={"/"} variant={"h6"} color={"inherit"}>
           Party Manager
         </HeaderTitle>
+        <HeaderSpacer />
         {userLogged ? (
           <Button
             variant={"text"}
