@@ -16,10 +16,10 @@ export const signInRequestCompletedSelector = createSelector(
 
 export const signInRequestErrorSelector = createSelector(
   [authModule],
-  (state: AuthModuleT) => state.signUpRequestError
+  (state: AuthModuleT) => state.signInRequestError
 );
 
-export const signInRequestInProgress = createSelector(
+export const signInRequestLoading = createSelector(
   [authModule],
   (state: AuthModuleT) =>
     state.signInRequestStarted &&
@@ -29,11 +29,11 @@ export const signInRequestInProgress = createSelector(
 export const signInRequestSuccessSelector = createSelector(
   [authModule],
   (state: AuthModuleT) =>
-    state.signInRequestStarted && state.signInRequestCompleted
+    !state.signInRequestStarted && state.signInRequestCompleted
 );
 
 export const signInRequestFailedSelector = createSelector(
   [authModule],
   (state: AuthModuleT) =>
-    state.signInRequestStarted && !!state.signInRequestError
+    !state.signInRequestStarted && !!state.signInRequestError
 );
