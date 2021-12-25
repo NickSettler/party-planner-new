@@ -8,6 +8,28 @@ import theme from "./helpers/theme/theme";
 import * as Sentry from "@sentry/react";
 import { Integrations } from "@sentry/tracing";
 
+declare global {
+  interface PasswordCredentialData {
+    id: string;
+    name?: string;
+    iconURL?: string;
+    password: string;
+  }
+
+  interface PasswordCredentialConstructor extends Credential {
+    new (passwordCredentialData: PasswordCredentialData): PasswordCredential;
+    new (htmlFormElement: HTMLFormElement): PasswordCredential;
+  }
+
+  interface PasswordCredential extends Credential {
+    readonly iconURL: string;
+    readonly password: string;
+    readonly name: string;
+  }
+
+  const PasswordCredential: PasswordCredentialConstructor;
+}
+
 Sentry.init({
   dsn: "https://ebd88944e5894badb4f7f44760427571@o525460.ingest.sentry.io/6123029",
   integrations: [new Integrations.BrowserTracing()],
