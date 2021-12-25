@@ -30,7 +30,8 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Set environment variables
-        run: echo "REACT_APP_API_URL=$REACT_APP_API_URL" >> .env
+        run: |
+          export REACT_APP_API_URL=${{ secrets.REACT_APP_API_URL }}
       - name: Run build task
         run: npm run build
       - name: Save build
