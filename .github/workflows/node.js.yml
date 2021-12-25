@@ -29,11 +29,10 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - name: Install dependencies
         run: npm install
-      - name: Set environment variables
+      - name: Run build task
         run: |
           export REACT_APP_API_URL=${{ secrets.REACT_APP_API_URL }}
-      - name: Run build task
-        run: npm run build
+          npm run build
       - name: Save build
         uses: actions/upload-artifact@master
         with:
