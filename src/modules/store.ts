@@ -6,6 +6,7 @@ import {
 } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
 import authReducer, { moduleName as authModuleName } from "./auth";
+import userReducer, { moduleName as userModuleName } from "./user";
 import rootSaga from "./saga";
 
 const sagaMiddleware = createSagaMiddleware();
@@ -23,6 +24,7 @@ const enhancer = compose(applyMiddleware(sagaMiddleware), ...middleware);
 
 const rootReducer = combineReducers({
   [authModuleName]: authReducer,
+  [userModuleName]: userReducer,
 });
 
 const store = createStore(rootReducer, enhancer);
