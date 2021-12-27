@@ -14,6 +14,12 @@ const reducer = (
         signInRequestCompleted: false,
         signInRequestError: "",
       };
+    case actionTypes.RUN_SIGN_UP_REQUEST:
+      return {
+        ...state,
+        signUpRequestCompleted: false,
+        signUpRequestError: "",
+      };
     case actionTypes.RUN_SIGN_OUT_REQUEST: {
       return {
         ...state,
@@ -41,6 +47,28 @@ const reducer = (
       return {
         ...state,
         signInRequestError: error,
+      };
+    }
+
+    case actionTypes.SET_SIGN_UP_REQUEST_STARTED: {
+      const { started } = payload;
+      return {
+        ...state,
+        signUpRequestStarted: started,
+      };
+    }
+    case actionTypes.SET_SIGN_UP_REQUEST_COMPLETED: {
+      const { completed } = payload;
+      return {
+        ...state,
+        signUpRequestCompleted: completed,
+      };
+    }
+    case actionTypes.SET_SIGN_UP_REQUEST_ERROR: {
+      const { error } = payload;
+      return {
+        ...state,
+        signUpRequestError: error,
       };
     }
 

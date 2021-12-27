@@ -6,10 +6,12 @@ import {
   setSignInRequestStarted,
   setSignOutRequestCompleted,
   setSignOutRequestStarted,
+  setSignUpRequestError,
 } from "./actions";
 import {
   signInRequestLoading,
   signOutRequestStartedSelector,
+  signUpRequestStartedSelector,
 } from "./selectors";
 import { AnyAction } from "@reduxjs/toolkit";
 import { setUserId, setUserToken } from "../user";
@@ -25,6 +27,7 @@ export function* authSaga() {
   yield fork(authInitWorker);
 
   yield takeEvery(actionTypes.RUN_SIGN_IN_REQUEST, signInRequestWorker);
+  yield takeEvery(actionTypes.RUN_SIGN_UP_REQUEST, signUpRequestWorker);
   yield takeEvery(actionTypes.RUN_SIGN_OUT_REQUEST, signOutRequestWorker);
 }
 
@@ -68,6 +71,50 @@ function* signInRequestWorker({ payload }: AnyAction) {
       const cred = new PasswordCredential({
         id: email,
         name: response.user.username,
+        password,
+      });
+
+      yield navigator.credentials.store(cred);
+    }
+
+    yield put(setUserToken(response.jwt));
+  }
+}
+
+function* signUpRequestWorker({ payload }: AnyAction) {
+  const isRequestRunning: boolean = yield select(signUpRequestStartedSelector);
+
+  if (isRequestRunning) return;
+
+  const { email, password, username } = payload;
+
+  const {
+    response,
+    error,
+  }: {
+    response: AuthRegisterResponseT;
+    error: ApolloError;
+  } = yield Api.getInstance()
+    .auth.register(email, username, password)
+    .then((response: AuthRegisterResponseT) => ({ response }))
+    .catch((error: ApolloError) => ({ error }));
+
+  yield put(setSignInRequestStarted(false));
+
+  if (error) {
+    yield put(
+      setSignUpRequestError(
+        (error.graphQLErrors[0].extensions as any).exception.data.message[0]
+          .messages[0].message
+      )
+    );
+  } else {
+    yield put(setSignInRequestCompleted(true));
+
+    if (navigator.credentials) {
+      const cred = new PasswordCredential({
+        id: email,
+        name: username,
         password,
       });
 

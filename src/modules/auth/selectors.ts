@@ -38,6 +38,40 @@ export const signInRequestFailedSelector = createSelector(
     !state.signInRequestStarted && !!state.signInRequestError
 );
 
+export const signUpRequestStartedSelector = createSelector(
+  [authModule],
+  (state: AuthModuleT) => state.signUpRequestStarted
+);
+
+export const signUpRequestCompletedSelector = createSelector(
+  [authModule],
+  (state: AuthModuleT) => state.signUpRequestCompleted
+);
+
+export const signUpRequestErrorSelector = createSelector(
+  [authModule],
+  (state: AuthModuleT) => state.signUpRequestError
+);
+
+export const signUpRequestLoadingSelector = createSelector(
+  [authModule],
+  (state: AuthModuleT) =>
+    state.signUpRequestStarted &&
+    !(state.signUpRequestCompleted || state.signUpRequestError)
+);
+
+export const signUpRequestSuccessSelector = createSelector(
+  [authModule],
+  (state: AuthModuleT) =>
+    !state.signUpRequestStarted && state.signUpRequestCompleted
+);
+
+export const signUpRequestFailedSelector = createSelector(
+  [authModule],
+  (state: AuthModuleT) =>
+    !state.signUpRequestStarted && !!state.signUpRequestError
+);
+
 export const signOutRequestStartedSelector = createSelector(
   [authModule],
   (state: AuthModuleT) => state.signOutRequestStarted
