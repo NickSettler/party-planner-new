@@ -43,7 +43,7 @@ const SignUpPage = (props: SignUpPagePropsT): JSX.Element => {
     handleSubmit,
   } = useSignUpPage(props);
 
-  if (props.userLogged) {
+  if (userLogged) {
     return <Navigate to={"/dashboard"} />;
   }
 
