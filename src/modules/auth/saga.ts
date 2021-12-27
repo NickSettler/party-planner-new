@@ -5,18 +5,21 @@ import {
   setSignInRequestError,
   setSignInRequestStarted,
   setSignOutRequestCompleted,
-  setSignOutRequestError,
   setSignOutRequestStarted,
 } from "./actions";
-import Api from "../../helpers/api";
 import {
   signInRequestLoading,
   signOutRequestStartedSelector,
 } from "./selectors";
 import { AnyAction } from "@reduxjs/toolkit";
 import { setUserId, setUserToken } from "../user";
-import { AuthResult } from "@directus/sdk";
 import { LOCAL_STORAGE_KEYS } from "../../helpers/localStorage/consts";
+import Api from "../../helpers/api_v2";
+import {
+  AuthLoginResponseT,
+  AuthRegisterResponseT,
+} from "../../helpers/api_v2/controllers/types/auth.types";
+import { ApolloError } from "@apollo/client";
 
 export function* authSaga() {
   yield fork(authInitWorker);
@@ -40,32 +43,38 @@ function* signInRequestWorker({ payload }: AnyAction) {
 
   yield put(setSignInRequestStarted(true));
 
-  const { response, error }: { response: AuthResult; error: any } =
+  const {
+    response,
+    error,
+  }: { response: AuthLoginResponseT; error: ApolloError } =
     yield Api.getInstance()
-      .auth.login({
-        email,
-        password,
-      })
-      .then((response: AuthResult) => ({ response }))
+      .auth.login(email, password)
+      .then((response) => ({ response }))
       .catch((error) => ({ error }));
 
   yield put(setSignInRequestStarted(false));
 
   if (error) {
-    yield put(setSignInRequestError("Wrong credentials"));
+    yield put(
+      setSignInRequestError(
+        (error.graphQLErrors[0].extensions as any).exception.data.message[0]
+          .messages[0].message
+      )
+    );
   } else {
     yield put(setSignInRequestCompleted(true));
 
     if (navigator.credentials) {
       const cred = new PasswordCredential({
         id: email,
+        name: response.user.username,
         password,
       });
 
       yield navigator.credentials.store(cred);
     }
 
-    yield put(setUserToken(response.access_token));
+    yield put(setUserToken(response.jwt));
   }
 }
 
@@ -76,16 +85,11 @@ function* signOutRequestWorker() {
 
   yield put(setSignOutRequestStarted(true));
 
-  const { error } = yield Api.getInstance().logout();
+  Api.getInstance().auth.logout();
 
   yield put(setSignOutRequestStarted(false));
+  yield put(setSignOutRequestCompleted(true));
 
-  if (error) {
-    yield put(setSignOutRequestError("Error while signing out"));
-  } else {
-    yield put(setSignOutRequestCompleted(true));
-
-    yield put(setUserId(""));
-    yield put(setUserToken(""));
-  }
+  yield put(setUserId(""));
+  yield put(setUserToken(""));
 }
