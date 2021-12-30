@@ -67,7 +67,7 @@ function* signInRequestWorker({ payload }: AnyAction) {
   } else {
     yield put(setSignInRequestCompleted(true));
 
-    if (navigator.credentials) {
+    if (navigator.credentials && window.PasswordCredential) {
       const cred = new PasswordCredential({
         id: email,
         name: response.user.username,
@@ -111,7 +111,7 @@ function* signUpRequestWorker({ payload }: AnyAction) {
   } else {
     yield put(setSignInRequestCompleted(true));
 
-    if (navigator.credentials) {
+    if (navigator.credentials && window.PasswordCredential) {
       const cred = new PasswordCredential({
         id: email,
         name: username,

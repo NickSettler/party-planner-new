@@ -28,6 +28,10 @@ declare global {
   }
 
   const PasswordCredential: PasswordCredentialConstructor;
+
+  interface Window {
+    PasswordCredential: PasswordCredentialConstructor;
+  }
 }
 
 Sentry.init({
