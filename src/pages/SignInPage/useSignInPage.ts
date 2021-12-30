@@ -24,6 +24,7 @@ const useSignInPage = ({
           .get({
             // @ts-ignore
             password: true,
+            mediation: "optional",
           })
           .then((credentials) => {
             if (credentials && credentials.type === "password") {
