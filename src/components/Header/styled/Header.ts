@@ -4,7 +4,9 @@ import LinkTypography from "../../../uikit/LinkTypography";
 import AppBar from "@mui/material/AppBar";
 
 export const HeaderAppBar = styled(AppBar)(({ theme }) => ({
+  position: "relative",
   marginBottom: theme.spacing(2),
+  zIndex: theme.zIndex.drawer + 1,
 }));
 
 export const HeaderToolbar = styled(Toolbar)({
