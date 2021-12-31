@@ -30,6 +30,7 @@ import { LOCAL_STORAGE_KEYS } from "../../helpers/localStorage/consts";
 import Api from "../../helpers/api";
 import { AuthResult } from "@directus/sdk";
 import { UserModel } from "../../helpers/api/model";
+import ReactGA from "react-ga4";
 
 export function* authSaga() {
   yield fork(authInitWorker);
@@ -102,6 +103,11 @@ function* signInRequestWorker({ payload }: AnyAction) {
     yield navigator.credentials.store(cred);
   }
 
+  ReactGA.gtag("event", "login", {
+    event_category: "auth",
+    event_label: "login",
+  });
+
   yield put(setUserToken(signInResponse.access_token));
 }
 
@@ -142,6 +148,11 @@ function* signUpRequestWorker({ payload }: AnyAction) {
     yield put(setSignUpRequestError(yield select(signInRequestErrorSelector)));
     return;
   }
+
+  ReactGA.gtag("event", "sign_up", {
+    event_category: "auth",
+    event_label: "sign_up",
+  });
 
   yield put(setSignUpRequestCompleted(true));
 }

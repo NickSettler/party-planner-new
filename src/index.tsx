@@ -7,7 +7,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import theme from "./helpers/theme/theme";
 import * as Sentry from "@sentry/react";
 import { Integrations } from "@sentry/tracing";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 
 declare global {
   interface PasswordCredentialData {
@@ -36,6 +36,7 @@ declare global {
 }
 
 ReactGA.initialize("G-LFX8QECN4V");
+ReactGA.send("pageview");
 
 Sentry.init({
   dsn: "https://ebd88944e5894badb4f7f44760427571@o525460.ingest.sentry.io/6123029",
