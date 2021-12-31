@@ -164,7 +164,7 @@ function* signOutRequestWorker() {
 
   yield put(setSignOutRequestStarted(true));
 
-  yield call(Api.getInstance().auth.logout.bind(Api.getInstance().auth));
+  yield call(Api.getInstance().logout.bind(Api.getInstance()));
 
   if (navigator.credentials)
     yield call(

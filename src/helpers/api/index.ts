@@ -20,4 +20,8 @@ export default class Api extends Directus<DirectusModel> {
     }
     return Api._instance;
   }
+
+  public async logout(): Promise<void> {
+    return this.auth.logout().catch(() => {});
+  }
 }
