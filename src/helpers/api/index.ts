@@ -1,6 +1,7 @@
 import { Directus, DirectusOptions } from "@directus/sdk";
+import DirectusModel from "./model";
 
-export default class Api extends Directus<any> {
+export default class Api extends Directus<DirectusModel> {
   private static _instance: Api;
   private static _baseUrl: string = process.env.REACT_APP_API_URL!;
 
