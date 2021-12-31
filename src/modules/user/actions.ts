@@ -33,17 +33,17 @@ export const setUserInfoRequestError = (error: string) => ({
   payload: { error },
 });
 
-export const setUserId = (id: string) => ({
+export const setUserId = (id: string | false) => ({
   type: actionTypes.SET_USER_ID,
   payload: { id },
 });
 
-export const setUserToken = (token: string) => ({
+export const setUserToken = (token: string | false) => ({
   type: actionTypes.SET_USER_TOKEN,
   payload: { token },
 });
 
-export const setUserInfo = (info: UserModel) => ({
+export const setUserInfo = (info: UserModel | false) => ({
   type: actionTypes.SET_USER_INFO,
   payload: { info },
 });

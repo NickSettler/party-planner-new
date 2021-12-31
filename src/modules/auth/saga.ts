@@ -19,6 +19,7 @@ import {
 import { AnyAction } from "@reduxjs/toolkit";
 import {
   setUserId,
+  setUserInfo,
   setUserToken,
   userInfoRequestErrorSelector,
   userInfoRequestFailedSelector,
@@ -152,13 +153,17 @@ function* signOutRequestWorker() {
 
   yield put(setSignOutRequestStarted(true));
 
-  yield Api.getInstance().auth.logout();
+  yield call(Api.getInstance().auth.logout.bind(Api.getInstance().auth));
 
-  if (navigator.credentials) yield navigator.credentials.preventSilentAccess();
+  if (navigator.credentials)
+    yield call(
+      navigator.credentials.preventSilentAccess.bind(navigator.credentials)
+    );
 
   yield put(setSignOutRequestStarted(false));
   yield put(setSignOutRequestCompleted(true));
 
-  yield put(setUserId(""));
-  yield put(setUserToken(""));
+  yield put(setUserId(false));
+  yield put(setUserToken(false));
+  yield put(setUserInfo(false));
 }
