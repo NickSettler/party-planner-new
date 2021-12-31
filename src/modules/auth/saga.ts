@@ -1,4 +1,4 @@
-import { fork, put, select, takeEvery } from "redux-saga/effects";
+import { call, fork, put, select, takeEvery } from "redux-saga/effects";
 import {
   actionTypes,
   setSignInRequestCompleted,
@@ -6,22 +6,29 @@ import {
   setSignInRequestStarted,
   setSignOutRequestCompleted,
   setSignOutRequestStarted,
+  setSignUpRequestCompleted,
   setSignUpRequestError,
 } from "./actions";
 import {
+  signInRequestErrorSelector,
+  signInRequestFailedSelector,
   signInRequestLoading,
   signOutRequestStartedSelector,
   signUpRequestStartedSelector,
 } from "./selectors";
 import { AnyAction } from "@reduxjs/toolkit";
-import { setUserId, setUserToken } from "../user";
-import { LOCAL_STORAGE_KEYS } from "../../helpers/localStorage/consts";
-import Api from "../../helpers/api_v2";
 import {
-  AuthLoginResponseT,
-  AuthRegisterResponseT,
-} from "../../helpers/api_v2/controllers/types/auth.types";
-import { ApolloError } from "@apollo/client";
+  setUserId,
+  setUserToken,
+  userInfoRequestErrorSelector,
+  userInfoRequestFailedSelector,
+  userInfoRequestWorker,
+  userInfoSelector,
+} from "../user";
+import { LOCAL_STORAGE_KEYS } from "../../helpers/localStorage/consts";
+import Api from "../../helpers/api";
+import { AuthResult } from "@directus/sdk";
+import { UserModel } from "../../helpers/api/model";
 
 export function* authSaga() {
   yield fork(authInitWorker);
@@ -47,38 +54,54 @@ function* signInRequestWorker({ payload }: AnyAction) {
   yield put(setSignInRequestStarted(true));
 
   const {
-    response,
-    error,
-  }: { response: AuthLoginResponseT; error: ApolloError } =
-    yield Api.getInstance()
-      .auth.login(email, password)
-      .then((response) => ({ response }))
-      .catch((error) => ({ error }));
+    response: signInResponse,
+    error: signInError,
+  }: { response: AuthResult; error: any } = yield Api.getInstance()
+    .auth.login({
+      email,
+      password,
+    })
+    .then((response: AuthResult) => ({ response }))
+    .catch((error: any) => ({ error }));
 
   yield put(setSignInRequestStarted(false));
 
-  if (error) {
+  if (signInError) {
     yield put(
-      setSignInRequestError(
-        (error.graphQLErrors[0].extensions as any).exception.data.message[0]
-          .messages[0].message
-      )
+      setSignInRequestError("Something went wrong. Please try again later.")
     );
-  } else {
-    yield put(setSignInRequestCompleted(true));
-
-    if (navigator.credentials && window.PasswordCredential) {
-      const cred = new PasswordCredential({
-        id: email,
-        name: response.user.username,
-        password,
-      });
-
-      yield navigator.credentials.store(cred);
-    }
-
-    yield put(setUserToken(response.jwt));
+    return;
   }
+
+  yield call(userInfoRequestWorker);
+
+  const userInfoError: boolean = yield select(userInfoRequestFailedSelector);
+
+  if (userInfoError) {
+    yield put(
+      setSignInRequestError(yield select(userInfoRequestErrorSelector))
+    );
+    return;
+  }
+
+  yield put(setSignInRequestCompleted(true));
+
+  if (navigator.credentials && window.PasswordCredential) {
+    const userInfo: UserModel = yield select(userInfoSelector);
+
+    const iconUrl = `${process.env.REACT_APP_API_URL}/assets/${userInfo.avatar}?key=256-256`;
+
+    const cred = new PasswordCredential({
+      id: email,
+      name: `${userInfo.first_name} ${userInfo.last_name}`,
+      password,
+      ...(userInfo.avatar && { iconURL: iconUrl }),
+    });
+
+    yield navigator.credentials.store(cred);
+  }
+
+  yield put(setUserToken(signInResponse.access_token));
 }
 
 function* signUpRequestWorker({ payload }: AnyAction) {
@@ -88,41 +111,38 @@ function* signUpRequestWorker({ payload }: AnyAction) {
 
   const { email, password, username } = payload;
 
-  const {
-    response,
-    error,
-  }: {
-    response: AuthRegisterResponseT;
-    error: ApolloError;
-  } = yield Api.getInstance()
-    .auth.register(email, username, password)
-    .then((response: AuthRegisterResponseT) => ({ response }))
-    .catch((error: ApolloError) => ({ error }));
+  const { error: signUpError }: { response: any; error: any } =
+    yield Api.getInstance()
+      .items("directus_users")
+      .createOne({
+        email,
+        password,
+        first_name: username,
+      })
+      .then((response: any) => ({ response }))
+      .catch((error: any) => ({ error }));
 
   yield put(setSignInRequestStarted(false));
 
-  if (error) {
+  if (signUpError) {
     yield put(
-      setSignUpRequestError(
-        (error.graphQLErrors[0].extensions as any).exception.data.message[0]
-          .messages[0].message
-      )
+      setSignUpRequestError("Something went wrong. Please try again later.")
     );
-  } else {
-    yield put(setSignInRequestCompleted(true));
-
-    if (navigator.credentials && window.PasswordCredential) {
-      const cred = new PasswordCredential({
-        id: email,
-        name: username,
-        password,
-      });
-
-      yield navigator.credentials.store(cred);
-    }
-
-    yield put(setUserToken(response.jwt));
+    return;
   }
+
+  yield call<(payload: any) => void>(signInRequestWorker, {
+    payload: { email, password },
+  });
+
+  const signInError: boolean = yield select(signInRequestFailedSelector);
+
+  if (signInError) {
+    yield put(setSignUpRequestError(yield select(signInRequestErrorSelector)));
+    return;
+  }
+
+  yield put(setSignUpRequestCompleted(true));
 }
 
 function* signOutRequestWorker() {
