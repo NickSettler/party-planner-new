@@ -8,6 +8,27 @@ const reducer = (
   { type, payload }: AnyAction
 ) => {
   switch (type) {
+    case actionTypes.RUN_USER_INFO_REQUEST:
+      return {
+        ...state,
+        userInfoRequestCompleted: false,
+        userInfoRequestError: "",
+      };
+    case actionTypes.SET_USER_INFO_REQUEST_STARTED:
+      return {
+        ...state,
+        userInfoRequestStarted: payload.started,
+      };
+    case actionTypes.SET_USER_INFO_REQUEST_COMPLETED:
+      return {
+        ...state,
+        userInfoRequestCompleted: payload.completed,
+      };
+    case actionTypes.SET_USER_INFO_REQUEST_ERROR:
+      return {
+        ...state,
+        userInfoRequestError: payload.error,
+      };
     case actionTypes.SET_USER_ID:
       return {
         ...state,
@@ -17,6 +38,12 @@ const reducer = (
       return {
         ...state,
         userToken: payload.token,
+      };
+    }
+    case actionTypes.SET_USER_INFO: {
+      return {
+        ...state,
+        userInfo: payload.info,
       };
     }
     default:
