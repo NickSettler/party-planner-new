@@ -31,4 +31,6 @@ const store = createStore(rootReducer, enhancer);
 
 sagaMiddleware.run(rootSaga);
 
+if (process.env.NODE_ENV !== "production") window.store = store;
+
 export default store;

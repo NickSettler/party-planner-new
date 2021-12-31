@@ -32,6 +32,8 @@ declare global {
 
   interface Window {
     PasswordCredential: PasswordCredentialConstructor;
+
+    store: any;
   }
 }
 
