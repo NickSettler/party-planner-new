@@ -132,7 +132,7 @@ function* signOutRequestWorker() {
 
   yield put(setSignOutRequestStarted(true));
 
-  Api.getInstance().auth.logout();
+  yield Api.getInstance().auth.logout();
 
   if (navigator.credentials) yield navigator.credentials.preventSilentAccess();
 
