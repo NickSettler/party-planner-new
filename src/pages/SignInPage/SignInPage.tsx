@@ -10,7 +10,6 @@ import {
 import TextField from "@mui/material/TextField";
 import React from "react";
 import Button from "@mui/material/Button";
-import Container from "@mui/material/Container";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
@@ -42,7 +41,7 @@ const SignInPage = (props: SignInPagePropsT): JSX.Element => {
   }
 
   return (
-    <Container>
+    <>
       <SignInBox>
         <SignInForm onSubmit={handleSubmit}>
           <Card variant={"elevation"}>
@@ -97,7 +96,7 @@ const SignInPage = (props: SignInPagePropsT): JSX.Element => {
           <SignUpLink to={"/signup"}>sign up</SignUpLink>
         </Typography>
       </SignInBox>
-    </Container>
+    </>
   );
 };
 

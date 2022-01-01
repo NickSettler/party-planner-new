@@ -3,7 +3,6 @@ import useSignUpPage from "./useSignUpPage";
 import { SignUpPagePropsT } from "./types/SignUpPage.types";
 import { userLoggedSelector } from "../../modules/user";
 import { Navigate } from "react-router-dom";
-import Container from "@mui/material/Container";
 import {
   SignInLink,
   SignUpActions,
@@ -48,7 +47,7 @@ const SignUpPage = (props: SignUpPagePropsT): JSX.Element => {
   }
 
   return (
-    <Container>
+    <>
       <SignUpBox>
         <SignUpForm onSubmit={handleSubmit}>
           <Card>
@@ -139,7 +138,7 @@ const SignUpPage = (props: SignUpPagePropsT): JSX.Element => {
           <SignInLink to={"/signin"}>sign in</SignInLink>
         </Typography>
       </SignUpBox>
-    </Container>
+    </>
   );
 };
 

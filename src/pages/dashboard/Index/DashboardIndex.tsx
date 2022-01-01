@@ -1,12 +1,11 @@
 import { connect } from "react-redux";
-import { Route, Routes } from "react-router-dom";
-import DashboardMain from "../Main/DashboardMain";
 import Drawer from "@mui/material/Drawer";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemButton from "@mui/material/ListItemButton";
+import { Outlet } from "react-router-dom";
 
 const DashboardIndex = (): JSX.Element => {
   return (
@@ -21,9 +20,7 @@ const DashboardIndex = (): JSX.Element => {
           </ListItem>
         </List>
       </Drawer>
-      <Routes>
-        <Route path={"/parties"} element={<DashboardMain />} />
-      </Routes>
+      <Outlet />
     </>
   );
 };
