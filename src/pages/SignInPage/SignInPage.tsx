@@ -10,18 +10,20 @@ import {
 import TextField from "@mui/material/TextField";
 import React from "react";
 import Button from "@mui/material/Button";
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardContent from "@mui/material/CardContent";
 import {
-  SignInActions,
   SignInBox,
+  SignInContentSection,
   SignInForm,
-  SignUpLink,
+  SignInIllustrationCard,
 } from "./styled/SignInPage";
 import { userLoggedSelector } from "../../modules/user";
 import { Navigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
+import UnlockImage from "../../assets/illustrations/unlock.svg";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Stack from "@mui/material/Stack";
+import Hidden from "../../components/general/Hidden";
 
 const SignInPage = (props: SignInPagePropsT): JSX.Element => {
   const { signInRequestLoading, signInRequestFailed, signInRequestError } =
@@ -43,58 +45,59 @@ const SignInPage = (props: SignInPagePropsT): JSX.Element => {
   return (
     <>
       <SignInBox>
-        <SignInForm onSubmit={handleSubmit}>
-          <Card variant={"elevation"}>
-            <CardHeader title={"Sign In"} />
-            <CardContent>
-              <TextField
-                type={"email"}
-                label={"Email"}
-                name={"email"}
-                value={emailState}
-                onChange={handleChange}
-                fullWidth
-                autoComplete={"email"}
-                onFocus={handleFocus}
-                error={!!errors.email}
-                helperText={errors.email}
-                disabled={signInRequestLoading}
-              />
-              <TextField
-                type={"password"}
-                label={"Password"}
-                name={"password"}
-                value={passwordState}
-                onChange={handleChange}
-                fullWidth
-                margin={"normal"}
-                autoComplete={"current-password"}
-                onFocus={handleFocus}
-                error={!!errors.password}
-                helperText={errors.password}
-                disabled={signInRequestLoading}
-              />
-              {signInRequestFailed && (
-                <Typography color={"error"} variant={"body2"}>
-                  {signInRequestError}
-                </Typography>
-              )}
-            </CardContent>
-            <SignInActions>
-              <Button
-                color={"secondary"}
-                type={"submit"}
-                disabled={signInRequestLoading}
-              >
-                Sign In
-              </Button>
-            </SignInActions>
-          </Card>
-        </SignInForm>
-        <Typography>
-          If you don't have an account, you can{" "}
-          <SignUpLink to={"/signup"}>sign up</SignUpLink>
-        </Typography>
+        <Hidden width={"mdDown"}>
+          <SignInIllustrationCard>
+            <Box component={"img"} src={UnlockImage} />
+          </SignInIllustrationCard>
+        </Hidden>
+        <Container maxWidth={"sm"}>
+          <SignInContentSection>
+            <SignInForm onSubmit={handleSubmit}>
+              <Stack>
+                <TextField
+                  type={"email"}
+                  label={"Email"}
+                  name={"email"}
+                  value={emailState}
+                  onChange={handleChange}
+                  fullWidth
+                  autoComplete={"email"}
+                  onFocus={handleFocus}
+                  error={!!errors.email}
+                  helperText={errors.email}
+                  disabled={signInRequestLoading}
+                />
+                <TextField
+                  type={"password"}
+                  label={"Password"}
+                  name={"password"}
+                  value={passwordState}
+                  onChange={handleChange}
+                  fullWidth
+                  margin={"normal"}
+                  autoComplete={"current-password"}
+                  onFocus={handleFocus}
+                  error={!!errors.password}
+                  helperText={errors.password}
+                  disabled={signInRequestLoading}
+                />
+                {signInRequestFailed && (
+                  <Typography color={"error"} variant={"body2"}>
+                    {signInRequestError}
+                  </Typography>
+                )}
+                <Button
+                  variant={"contained"}
+                  color={"secondary"}
+                  type={"submit"}
+                  disabled={signInRequestLoading}
+                >
+                  Sign In
+                </Button>
+              </Stack>
+            </SignInForm>
+          </SignInContentSection>
+        </Container>
       </SignInBox>
     </>
   );
