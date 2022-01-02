@@ -1,4 +1,5 @@
 import { createTheme } from "@mui/material";
+import componentOverrides from "./overrides";
 
 const primaryLightColor = "#B5EDF8";
 const primaryMainColor = "#7BDFF2";
@@ -21,6 +22,11 @@ const theme = createTheme({
       dark: secondaryDarkColor,
     },
   },
+  shape: {
+    borderRadius: 8,
+  },
 });
+
+theme.components = componentOverrides(theme);
 
 export default theme;
