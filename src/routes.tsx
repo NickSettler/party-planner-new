@@ -3,18 +3,19 @@ import { Navigate, useRoutes } from "react-router-dom";
 import SignInPage from "./pages/SignInPage";
 import MainPage from "./pages/MainPage";
 import SignUpPage from "./pages/SignUpPage";
-import DashboardIndex from "./pages/dashboard/Index/DashboardIndex";
 import DashboardMain from "./pages/dashboard/Main/DashboardMain";
 import EmptyLayout from "./layouts/EmptyLayout";
+import DashboardLayout from "./layouts/DashboardLayout";
 
 const Router: () => React.ReactElement | null = () => {
   return useRoutes([
     {
       path: "/dashboard/*",
-      element: <DashboardIndex />,
+      element: <DashboardLayout />,
       children: [
         { path: "*", element: <Navigate to={"/dashboard/app"} replace /> },
         { path: "app", element: <DashboardMain /> },
+        { path: "profile", element: <DashboardMain /> },
       ],
     },
     {
