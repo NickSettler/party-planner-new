@@ -52,6 +52,14 @@ const SignInPage = (props: SignInPagePropsT): JSX.Element => {
         </Hidden>
         <Container maxWidth={"sm"}>
           <SignInContentSection>
+            <Stack sx={{ mb: 5 }}>
+              <Typography variant={"h4"} gutterBottom>
+                Sign In
+              </Typography>
+              <Typography variant={"body1"}>
+                Enter your details below.
+              </Typography>
+            </Stack>
             <SignInForm onSubmit={handleSubmit}>
               <Stack>
                 <TextField
