@@ -18,7 +18,7 @@ import {
 import { userLoggedSelector } from "../../modules/user";
 import { Navigate, Link as RouterLink } from "react-router-dom";
 import Typography from "@mui/material/Typography";
-import UnlockImage from "../../assets/illustrations/unlock.svg";
+import UnlockImage from "../../assets/images/unlock.svg";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";

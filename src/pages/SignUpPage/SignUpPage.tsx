@@ -20,7 +20,7 @@ import {
 } from "../../modules/auth";
 import MiHidden from "../../uikit/MiHidden";
 import Box from "@mui/material/Box";
-import UnlockImage from "../../assets/illustrations/unlock.svg";
+import UnlockImage from "../../assets/images/unlock.svg";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import AuthLayout from "../../layouts/AuthLayout";

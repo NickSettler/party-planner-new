@@ -1,6 +1,6 @@
 import { styled } from "@mui/material/styles";
 import Background from "../../../assets/images/main-background.png";
-import Illustration from "../../../assets/illustrations/main-page__illustration.svg";
+import Illustration from "../../../assets/images/main-page__illustration.svg";
 import Box from "@mui/material/Box";
 
 export const MainPageBackground = styled(Box)({
