@@ -16,13 +16,15 @@ import {
   SignInIllustrationCard,
 } from "./styled/SignInPage";
 import { userLoggedSelector } from "../../modules/user";
-import { Navigate } from "react-router-dom";
+import { Navigate, Link as RouterLink } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import UnlockImage from "../../assets/illustrations/unlock.svg";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
-import Hidden from "../../components/general/Hidden";
+import Hidden from "../../uikit/Hidden";
+import AuthLayout from "../../layouts/AuthLayout";
+import { Link } from "@mui/material";
 
 const SignInPage = (props: SignInPagePropsT): JSX.Element => {
   const { signInRequestLoading, signInRequestFailed, signInRequestError } =
@@ -43,6 +45,20 @@ const SignInPage = (props: SignInPagePropsT): JSX.Element => {
 
   return (
     <>
+      <AuthLayout>
+        <>
+          Don’t have an account? &nbsp;{" "}
+          <Link
+            to={"/signup"}
+            component={RouterLink}
+            underline={"none"}
+            color={"secondary"}
+            variant={"subtitle2"}
+          >
+            Sign Up
+          </Link>
+        </>
+      </AuthLayout>
       <SignInBox>
         <Hidden width={"mdDown"}>
           <SignInIllustrationCard>
