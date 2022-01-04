@@ -126,6 +126,21 @@ let theme = createTheme({
       lineHeight: 1.5,
       fontSize: pxToRem(24),
     },
+    h4: {
+      fontWeight: 700,
+      lineHeight: 1.5,
+      fontSize: pxToRem(20),
+    },
+    h5: {
+      fontWeight: 700,
+      lineHeight: 1.5,
+      fontSize: pxToRem(18),
+    },
+    h6: {
+      fontWeight: 700,
+      lineHeight: 28 / 18,
+      fontSize: pxToRem(17),
+    },
   },
 });
 
