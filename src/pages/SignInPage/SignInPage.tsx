@@ -13,7 +13,6 @@ import Button from "@mui/material/Button";
 import {
   SignInBox,
   SignInContentSection,
-  SignInForm,
   SignInIllustrationCard,
 } from "./styled/SignInPage";
 import { userLoggedSelector } from "../../modules/user";
@@ -60,7 +59,7 @@ const SignInPage = (props: SignInPagePropsT): JSX.Element => {
                 Enter your details below.
               </Typography>
             </Stack>
-            <SignInForm onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
               <Stack>
                 <TextField
                   type={"email"}
@@ -103,7 +102,7 @@ const SignInPage = (props: SignInPagePropsT): JSX.Element => {
                   Sign In
                 </Button>
               </Stack>
-            </SignInForm>
+            </form>
           </SignInContentSection>
         </Container>
       </SignInBox>
