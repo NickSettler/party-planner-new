@@ -22,7 +22,7 @@ import UnlockImage from "../../assets/illustrations/unlock.svg";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
-import Hidden from "../../uikit/Hidden";
+import MiHidden from "../../uikit/MiHidden";
 import AuthLayout from "../../layouts/AuthLayout";
 import { Link } from "@mui/material";
 
@@ -60,11 +60,11 @@ const SignInPage = (props: SignInPagePropsT): JSX.Element => {
         </>
       </AuthLayout>
       <SignInBox>
-        <Hidden width={"mdDown"}>
+        <MiHidden width={"mdDown"}>
           <SignInIllustrationCard>
             <Box component={"img"} src={UnlockImage} />
           </SignInIllustrationCard>
-        </Hidden>
+        </MiHidden>
         <Container maxWidth={"sm"}>
           <SignInContentSection>
             <Stack sx={{ mb: 5 }}>

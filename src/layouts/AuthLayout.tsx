@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import React from "react";
-import Hidden from "../uikit/Hidden";
+import MiHidden from "../uikit/MiHidden";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 
@@ -30,9 +30,9 @@ const AuthLayout = ({
     <>
       <Outlet />
       <HeaderElement>
-        <Hidden width={"smDown"}>
+        <MiHidden width={"smDown"}>
           <Typography variant={"body2"}>{children}</Typography>
-        </Hidden>
+        </MiHidden>
       </HeaderElement>
     </>
   );

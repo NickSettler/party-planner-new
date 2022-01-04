@@ -18,7 +18,7 @@ import {
   signUpRequestFailedSelector,
   signUpRequestLoadingSelector,
 } from "../../modules/auth";
-import Hidden from "../../uikit/Hidden";
+import MiHidden from "../../uikit/MiHidden";
 import Box from "@mui/material/Box";
 import UnlockImage from "../../assets/illustrations/unlock.svg";
 import Container from "@mui/material/Container";
@@ -66,11 +66,11 @@ const SignUpPage = (props: SignUpPagePropsT): JSX.Element => {
         </>
       </AuthLayout>
       <SignUpBox>
-        <Hidden width={"mdDown"}>
+        <MiHidden width={"mdDown"}>
           <SignUpIllustrationCard>
             <Box component={"img"} src={UnlockImage} />
           </SignUpIllustrationCard>
-        </Hidden>
+        </MiHidden>
         <Container maxWidth={"sm"}>
           <SignUpContentSection>
             <Stack sx={{ mb: 5 }}>

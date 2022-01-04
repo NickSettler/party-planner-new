@@ -1,7 +1,7 @@
 import { HiddenPropsT } from "./hidden.types";
 import { Breakpoint, Theme, useMediaQuery } from "@mui/material";
 
-const Hidden = ({ width, children }: HiddenPropsT): JSX.Element | null => {
+const MiHidden = ({ width, children }: HiddenPropsT): JSX.Element | null => {
   const breakpoint = width.substring(0, 2) as Breakpoint;
 
   const hiddenUp = useMediaQuery((theme: Theme) =>
@@ -17,4 +17,4 @@ const Hidden = ({ width, children }: HiddenPropsT): JSX.Element | null => {
   return null;
 };
 
-export default Hidden;
+export default MiHidden;
