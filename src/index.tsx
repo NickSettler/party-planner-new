@@ -34,6 +34,7 @@ declare global {
     PasswordCredential: PasswordCredentialConstructor;
 
     store: any;
+    __REDUX_DEVTOOLS_EXTENSION__: any;
   }
 }
 

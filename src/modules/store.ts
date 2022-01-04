@@ -14,10 +14,8 @@ const sagaMiddleware = createSagaMiddleware();
 let middleware: Array<any> = [];
 
 if (process.env.NODE_ENV !== "production") {
-  middleware.push(
-    // @ts-ignore
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  );
+  if (window.__REDUX_DEVTOOLS_EXTENSION__)
+    middleware.push(window.__REDUX_DEVTOOLS_EXTENSION__());
 }
 
 const enhancer = compose(applyMiddleware(sagaMiddleware), ...middleware);
