@@ -11,9 +11,16 @@ const secondaryLightColor = "#F3B9D6";
 const secondaryMainColor = "#E774AD";
 const secondaryDarkColor = "#DC2E85";
 
-declare module "@mui/material/styles/createTheme" {
+declare module "@mui/system/createTheme" {
   interface Theme {
     customShadows: CustomShadows;
+  }
+}
+
+declare module "@mui/system/createTheme/shape" {
+  interface Shape {
+    borderRadiusSm: number | string;
+    borderRadiusMd: number | string;
   }
 }
 
@@ -85,6 +92,8 @@ const theme = createTheme({
   },
   shape: {
     borderRadius: 8,
+    borderRadiusSm: 12,
+    borderRadiusMd: 16,
   },
 });
 
