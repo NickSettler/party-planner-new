@@ -1,4 +1,4 @@
-import { alpha, createTheme, Theme } from "@mui/material";
+import { alpha, createTheme, responsiveFontSizes, Theme } from "@mui/material";
 import componentOverrides from "./overrides";
 import { Shadows } from "@mui/material/styles/shadows";
 import { CustomShadows } from "./theme.types";
@@ -77,7 +77,9 @@ const createCustomShadows = (theme: Theme, color: string): CustomShadows => {
   };
 };
 
-const theme = createTheme({
+const pxToRem = (px: number): string => `${px / 16}rem`;
+
+let theme = createTheme({
   palette: {
     primary: {
       light: primaryLightColor,
@@ -95,10 +97,41 @@ const theme = createTheme({
     borderRadiusSm: 12,
     borderRadiusMd: 16,
   },
+  typography: {
+    fontFamily: [
+      "-apple-system",
+      "BlinkMacSystemFont",
+      '"Segoe UI"',
+      '"Helvetica"',
+      "Arial",
+      "sans-serif",
+      '"Apple Color Emoji"',
+      "Roboto",
+    ].join(", "),
+    h1: {
+      fontFamily: "Roboto Slab",
+      fontWeight: 700,
+      lineHeight: 80 / 64,
+      fontSize: pxToRem(40),
+    },
+    h2: {
+      fontWeight: 700,
+      fontFamily: "Roboto Slab",
+      lineHeight: 64 / 48,
+      fontSize: pxToRem(32),
+    },
+    h3: {
+      fontFamily: "Roboto Slab",
+      fontWeight: 700,
+      lineHeight: 1.5,
+      fontSize: pxToRem(24),
+    },
+  },
 });
 
 theme.shadows = createShadows(theme.palette.grey["500"]);
 theme.customShadows = createCustomShadows(theme, theme.palette.grey["500"]);
 theme.components = componentOverrides(theme);
+theme = responsiveFontSizes(theme);
 
 export default theme;
