@@ -3,7 +3,11 @@ import { Components, Theme } from "@mui/material";
 const Button = (theme: Theme): Components => ({
   MuiButton: {
     styleOverrides: {
-      root: {},
+      root: {
+        "&:hover": {
+          boxShadow: "none",
+        },
+      },
       sizeLarge: 48,
       containedInherit: {
         color: theme.palette.grey[800],

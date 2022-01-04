@@ -141,6 +141,12 @@ let theme = createTheme({
       lineHeight: 28 / 18,
       fontSize: pxToRem(17),
     },
+    button: {
+      fontWeight: 700,
+      lineHeight: 24 / 14,
+      fontSize: pxToRem(14),
+      textTransform: "capitalize",
+    },
   },
 });
 
