@@ -11,8 +11,9 @@ const MiHidden = ({ width, children }: HiddenPropsT): JSX.Element | null => {
     theme.breakpoints.down(breakpoint)
   );
 
-  if (width.includes("Down")) return hiddenDown ? null : children;
-  if (width.includes("Up")) return hiddenUp ? null : children;
+  if (width.includes("Down"))
+    return hiddenDown ? null : (children as JSX.Element);
+  if (width.includes("Up")) return hiddenUp ? null : (children as JSX.Element);
 
   return null;
 };

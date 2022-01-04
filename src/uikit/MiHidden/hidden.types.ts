@@ -1,4 +1,8 @@
+import { Breakpoint } from "@mui/material";
+
+type HiddenWidthProp = `${Breakpoint}${"Down" | "Up"}`;
+
 export type HiddenPropsT = {
-  width: string;
-  children: JSX.Element;
+  width: HiddenWidthProp;
+  children?: JSX.Element;
 };
