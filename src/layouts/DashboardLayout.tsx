@@ -2,6 +2,7 @@ import { connect } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
 import Toolbar from "../components/dashboard/Toolbar/Toolbar";
 import { userLoggedSelector } from "../modules/user";
+import Sidebar from "../components/dashboard/Sidebar/Sidebar";
 import { styled } from "@mui/material/styles";
 import { Suspense } from "react";
 import Preloader from "../components/dashboard/Preloader";
@@ -25,6 +26,7 @@ const DashboardLayout = ({
 
   return (
     <RootStyle>
+      <Sidebar />
       <Toolbar />
       <Suspense fallback={Preloader()}>
         <MainStyle>
