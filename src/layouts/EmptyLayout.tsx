@@ -9,6 +9,7 @@ const StyledHeader = styled("header")(({ theme }) => ({
   width: "100%",
   position: "absolute",
   padding: theme.spacing(3, 3, 0),
+  zIndex: theme.zIndex.appBar,
 
   [theme.breakpoints.up("sm")]: {
     padding: theme.spacing(5, 5, 0),
