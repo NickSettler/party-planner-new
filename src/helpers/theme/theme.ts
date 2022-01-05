@@ -141,6 +141,24 @@ let theme = createTheme({
       lineHeight: 28 / 18,
       fontSize: pxToRem(17),
     },
+    subtitle1: {
+      fontWeight: 600,
+      lineHeight: 1.5,
+      fontSize: pxToRem(16),
+    },
+    subtitle2: {
+      fontWeight: 600,
+      lineHeight: 22 / 14,
+      fontSize: pxToRem(14),
+    },
+    body1: {
+      lineHeight: 1.5,
+      fontSize: pxToRem(16),
+    },
+    body2: {
+      lineHeight: 22 / 14,
+      fontSize: pxToRem(14),
+    },
     button: {
       fontWeight: 700,
       lineHeight: 24 / 14,
