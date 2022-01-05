@@ -1,16 +1,21 @@
-import { Avatar, MenuItem, Popover } from "@mui/material";
-import AvatarImage from "../../../assets/images/avatar_default.jpg";
+import Avatar from "@mui/material/Avatar";
+import Divider from "@mui/material/Divider";
+import MenuItem from "@mui/material/MenuItem";
+import Popover from "@mui/material/Popover";
 import IconButton from "@mui/material/IconButton";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 import {
   AccountDropdownMenuItem,
   AccountDropdownPropsT,
 } from "./AccountDropdown.types";
+import AvatarImage from "../../../assets/images/avatar_default.jpg";
 import useAccountDropdown from "./useAccountDropdown";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import { Dispatch } from "@reduxjs/toolkit";
 import { runSignOutRequest } from "../../../modules/auth";
 import { connect } from "react-redux";
+import { userInfoSelector } from "../../../modules/user";
 
 const MENU_OPTIONS: Array<AccountDropdownMenuItem> = [
   {
@@ -20,7 +25,7 @@ const MENU_OPTIONS: Array<AccountDropdownMenuItem> = [
 ];
 
 const AccountDropdown = (props: AccountDropdownPropsT): JSX.Element => {
-  const { signOut } = props;
+  const { signOut, userInfo } = props;
 
   const { popoverRef, open, toggleOpen, navigateTo } =
     useAccountDropdown(props);
@@ -44,6 +49,25 @@ const AccountDropdown = (props: AccountDropdownPropsT): JSX.Element => {
           horizontal: "right",
         }}
       >
+        {userInfo && (
+          <>
+            <Box sx={{ my: 1.5, px: 2.5 }}>
+              <Typography variant={"subtitle2"} noWrap>
+                {userInfo.first_name} {userInfo.last_name}
+              </Typography>
+              <Typography
+                variant={"body2"}
+                sx={{ color: "text.secondary" }}
+                noWrap
+              >
+                {userInfo.email}
+              </Typography>
+            </Box>
+
+            <Divider sx={{ my: 1 }} />
+          </>
+        )}
+
         {MENU_OPTIONS.map((menuItem, i) => (
           <MenuItem
             key={i}
@@ -73,7 +97,9 @@ const AccountDropdown = (props: AccountDropdownPropsT): JSX.Element => {
   );
 };
 
-const mapStateToProps = () => ({});
+const mapStateToProps = (state: any) => ({
+  userInfo: userInfoSelector(state),
+});
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   signOut: () => dispatch(runSignOutRequest()),

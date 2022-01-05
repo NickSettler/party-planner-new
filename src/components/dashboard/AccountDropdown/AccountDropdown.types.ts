@@ -1,4 +1,5 @@
 import React, { MutableRefObject } from "react";
+import { UserModel } from "../../../helpers/api/model";
 
 export type AccountDropdownMenuItem = {
   label: string;
@@ -7,6 +8,7 @@ export type AccountDropdownMenuItem = {
 };
 
 export type AccountDropdownPropsT = {
+  userInfo: Partial<UserModel> | false;
   signOut: () => void;
 };
 
