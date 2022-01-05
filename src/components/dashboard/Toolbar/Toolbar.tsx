@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import MiHidden from "../../../uikit/MiHidden";
-import { ToolbarStyle } from "./styled/Toolbar.styled";
+import { RootStyle, ToolbarStyle } from "./styled/Toolbar.styled";
 import IconButton from "@mui/material/IconButton";
 import { Menu } from "@mui/icons-material";
 import Box from "@mui/material/Box";
@@ -9,7 +9,7 @@ import AccountDropdown from "../AccountDropdown/AccountDropdown";
 
 const Toolbar = (): JSX.Element => {
   return (
-    <>
+    <RootStyle>
       <ToolbarStyle>
         <MiHidden width={"lgUp"}>
           <IconButton color={"inherit"}>
@@ -23,7 +23,7 @@ const Toolbar = (): JSX.Element => {
           <AccountDropdown />
         </Stack>
       </ToolbarStyle>
-    </>
+    </RootStyle>
   );
 };
 
