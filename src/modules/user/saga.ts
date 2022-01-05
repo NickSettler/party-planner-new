@@ -1,4 +1,4 @@
-import { put, select, takeEvery } from "redux-saga/effects";
+import { fork, put, select, takeEvery } from "redux-saga/effects";
 import {
   actionTypes,
   setUserInfo,
@@ -12,7 +12,15 @@ import { PartialItem, UserItem } from "@directus/sdk";
 import { UserModel } from "../../helpers/api/model";
 
 export function* userSaga() {
+  yield fork(userInitWorker);
+
   yield takeEvery(actionTypes.RUN_USER_INFO_REQUEST, userInfoRequestWorker);
+}
+
+export function* userInitWorker() {
+  yield put({
+    type: actionTypes.RUN_USER_INFO_REQUEST,
+  });
 }
 
 export function* userInfoRequestWorker() {
