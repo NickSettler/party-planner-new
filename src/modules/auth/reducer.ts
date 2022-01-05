@@ -9,23 +9,11 @@ const reducer = (
 ) => {
   switch (type) {
     case actionTypes.RUN_SIGN_IN_REQUEST:
-      return {
-        ...state,
-        signInRequestCompleted: false,
-        signInRequestError: "",
-      };
+      return state;
     case actionTypes.RUN_SIGN_UP_REQUEST:
-      return {
-        ...state,
-        signUpRequestCompleted: false,
-        signUpRequestError: "",
-      };
+      return state;
     case actionTypes.RUN_SIGN_OUT_REQUEST: {
-      return {
-        ...state,
-        signOutRequestCompleted: false,
-        signOutRequestError: "",
-      };
+      return state;
     }
 
     case actionTypes.SET_SIGN_IN_REQUEST_STARTED: {

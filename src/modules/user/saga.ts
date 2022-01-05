@@ -31,6 +31,8 @@ export function* userInfoRequestWorker() {
   if (isRequestRunning) return;
 
   yield put(setUserInfoRequestStarted(true));
+  yield put(setUserInfoRequestCompleted(false));
+  yield put(setUserInfoRequestError(""));
 
   const { response }: { response: PartialItem<UserModel>; error: any } =
     yield Api.getInstance()

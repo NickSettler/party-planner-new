@@ -11,8 +11,6 @@ const reducer = (
     case actionTypes.RUN_USER_INFO_REQUEST:
       return {
         ...state,
-        userInfoRequestCompleted: false,
-        userInfoRequestError: "",
       };
     case actionTypes.SET_USER_INFO_REQUEST_STARTED:
       return {

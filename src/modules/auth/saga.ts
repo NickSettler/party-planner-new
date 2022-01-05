@@ -5,9 +5,11 @@ import {
   setSignInRequestError,
   setSignInRequestStarted,
   setSignOutRequestCompleted,
+  setSignOutRequestError,
   setSignOutRequestStarted,
   setSignUpRequestCompleted,
   setSignUpRequestError,
+  setSignUpRequestStarted,
 } from "./actions";
 import {
   signInRequestErrorSelector,
@@ -54,6 +56,8 @@ function* signInRequestWorker({ payload }: AnyAction) {
   const { email, password } = payload;
 
   yield put(setSignInRequestStarted(true));
+  yield put(setSignInRequestCompleted(false));
+  yield put(setSignInRequestError(""));
 
   const {
     response: signInResponse,
@@ -65,8 +69,6 @@ function* signInRequestWorker({ payload }: AnyAction) {
     })
     .then((response: AuthResult) => ({ response }))
     .catch((error: any) => ({ error }));
-
-  yield put(setSignInRequestStarted(false));
 
   if (signInError) {
     yield put(
@@ -86,6 +88,7 @@ function* signInRequestWorker({ payload }: AnyAction) {
     return;
   }
 
+  yield put(setSignInRequestStarted(false));
   yield put(setSignInRequestCompleted(true));
 
   if (navigator.credentials && window.PasswordCredential) {
@@ -118,6 +121,10 @@ function* signUpRequestWorker({ payload }: AnyAction) {
 
   const { email, password, username } = payload;
 
+  yield put(setSignUpRequestStarted(true));
+  yield put(setSignUpRequestCompleted(false));
+  yield put(setSignUpRequestError(""));
+
   const { error: signUpError }: { response: any; error: any } =
     yield Api.getInstance()
       .items("directus_users")
@@ -129,9 +136,8 @@ function* signUpRequestWorker({ payload }: AnyAction) {
       .then((response: any) => ({ response }))
       .catch((error: any) => ({ error }));
 
-  yield put(setSignInRequestStarted(false));
-
   if (signUpError) {
+    yield put(setSignUpRequestStarted(false));
     yield put(
       setSignUpRequestError("Something went wrong. Please try again later.")
     );
@@ -145,6 +151,7 @@ function* signUpRequestWorker({ payload }: AnyAction) {
   const signInError: boolean = yield select(signInRequestFailedSelector);
 
   if (signInError) {
+    yield put(setSignUpRequestStarted(false));
     yield put(setSignUpRequestError(yield select(signInRequestErrorSelector)));
     return;
   }
@@ -154,6 +161,7 @@ function* signUpRequestWorker({ payload }: AnyAction) {
     event_label: "sign_up",
   });
 
+  yield put(setSignUpRequestStarted(false));
   yield put(setSignUpRequestCompleted(true));
 }
 
@@ -163,6 +171,8 @@ function* signOutRequestWorker() {
   if (isRequestRunning) return;
 
   yield put(setSignOutRequestStarted(true));
+  yield put(setSignOutRequestCompleted(false));
+  yield put(setSignOutRequestError(""));
 
   yield call(Api.getInstance().logout.bind(Api.getInstance()));
 
