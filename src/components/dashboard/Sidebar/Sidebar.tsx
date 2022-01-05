@@ -7,7 +7,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { AccountStyle } from "./styled/Sidebar.styled";
 import Avatar from "@mui/material/Avatar";
 import { userInfoSelector } from "../../../modules/user";
-import { DrawerContentPropsT } from "./Sidebar.types";
+import { DrawerContentPropsT, SidebarPropsT } from "./Sidebar.types";
 import Typography from "@mui/material/Typography";
 
 const SIDEBAR_WIDTH = 280;
@@ -67,13 +67,26 @@ const mapStateToDrawerProps = (state: any) => ({
 
 const DrawerContent = connect(mapStateToDrawerProps, {})(DrawerContentPure);
 
-const Sidebar = (): JSX.Element => {
+const Sidebar = ({ open, onClose }: SidebarPropsT): JSX.Element => {
   return (
     <RootStyle>
       <MiHidden width={"lgDown"}>
         <Drawer
           open
           variant={"persistent"}
+          PaperProps={{
+            sx: {
+              width: 280,
+            },
+          }}
+        >
+          <DrawerContent />
+        </Drawer>
+      </MiHidden>
+      <MiHidden width={"lgUp"}>
+        <Drawer
+          open={open}
+          onClose={onClose}
           PaperProps={{
             sx: {
               width: 280,

@@ -6,13 +6,14 @@ import { Menu } from "@mui/icons-material";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import AccountDropdown from "../AccountDropdown/AccountDropdown";
+import { ToolbarPropsT } from "./Toolbar.types";
 
-const Toolbar = (): JSX.Element => {
+const Toolbar = ({ onOpenSidebar }: ToolbarPropsT): JSX.Element => {
   return (
     <RootStyle>
       <ToolbarStyle>
         <MiHidden width={"lgUp"}>
-          <IconButton color={"inherit"}>
+          <IconButton color={"inherit"} onClick={onOpenSidebar}>
             <Menu />
           </IconButton>
         </MiHidden>

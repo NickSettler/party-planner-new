@@ -4,7 +4,7 @@ import Toolbar from "../components/dashboard/Toolbar/Toolbar";
 import { userLoggedSelector } from "../modules/user";
 import Sidebar from "../components/dashboard/Sidebar/Sidebar";
 import { styled } from "@mui/material/styles";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import Preloader from "../components/dashboard/Preloader";
 
 const RootStyle = styled("div")({
@@ -22,12 +22,14 @@ const DashboardLayout = ({
 }: {
   userLogged: boolean;
 }): JSX.Element => {
+  const [open, setOpen] = useState<boolean>(false);
+
   if (!userLogged) return <Navigate to={"/signin"} />;
 
   return (
     <RootStyle>
-      <Sidebar />
-      <Toolbar />
+      <Sidebar open={open} onClose={() => setOpen(false)} />
+      <Toolbar onOpenSidebar={() => setOpen(true)} />
       <Suspense fallback={Preloader()}>
         <MainStyle>
           <Outlet />
