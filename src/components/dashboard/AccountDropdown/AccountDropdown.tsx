@@ -31,7 +31,12 @@ const AccountDropdown = (props: AccountDropdownPropsT): JSX.Element => {
 
   return (
     <>
-      <IconButton disableRipple ref={popoverRef} onClick={() => toggleOpen()}>
+      <IconButton
+        disableRipple
+        ref={popoverRef}
+        onClick={() => toggleOpen()}
+        aria-label={"Profile menu"}
+      >
         <Avatar
           src={
             userInfo
@@ -39,6 +44,7 @@ const AccountDropdown = (props: AccountDropdownPropsT): JSX.Element => {
               : ""
           }
           sizes={"40px"}
+          alt={"Profile image"}
         />
       </IconButton>
 

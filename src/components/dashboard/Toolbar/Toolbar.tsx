@@ -13,7 +13,11 @@ const Toolbar = ({ onOpenSidebar }: ToolbarPropsT): JSX.Element => {
     <RootStyle>
       <ToolbarStyle>
         <MiHidden width={"lgUp"}>
-          <IconButton color={"inherit"} onClick={onOpenSidebar}>
+          <IconButton
+            color={"inherit"}
+            onClick={onOpenSidebar}
+            aria-label={"Navigation menu"}
+          >
             <Menu />
           </IconButton>
         </MiHidden>
