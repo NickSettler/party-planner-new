@@ -10,7 +10,6 @@ import {
   AccountDropdownMenuItem,
   AccountDropdownPropsT,
 } from "./AccountDropdown.types";
-import AvatarImage from "../../../assets/images/avatar_default.jpg";
 import useAccountDropdown from "./useAccountDropdown";
 import { Dispatch } from "@reduxjs/toolkit";
 import { runSignOutRequest } from "../../../modules/auth";
@@ -33,7 +32,14 @@ const AccountDropdown = (props: AccountDropdownPropsT): JSX.Element => {
   return (
     <>
       <IconButton disableRipple ref={popoverRef} onClick={() => toggleOpen()}>
-        <Avatar src={AvatarImage} sizes={"40px"} />
+        <Avatar
+          src={
+            userInfo
+              ? `${process.env.REACT_APP_API_URL}/assets/${userInfo.avatar}?key=64-64`
+              : ""
+          }
+          sizes={"40px"}
+        />
       </IconButton>
 
       <Popover
