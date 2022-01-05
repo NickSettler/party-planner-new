@@ -3,7 +3,7 @@ import { StyledPopper } from "./styled/Preloader.styled";
 
 const Preloader = (): JSX.Element => {
   return (
-    <StyledPopper open>
+    <StyledPopper>
       <CircularProgress />
     </StyledPopper>
   );
