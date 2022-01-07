@@ -6,9 +6,8 @@ import SignUpPage from "./pages/SignUpPage";
 import EmptyLayout from "./layouts/EmptyLayout";
 import DashboardLayout from "./layouts/DashboardLayout";
 
-const DashboardMain = lazy(
-  () => import("./pages/dashboard/Main/DashboardMain")
-);
+const DashboardMain = lazy(() => import("./pages/dashboard/Main"));
+const DashboardEvents = lazy(() => import("./pages/dashboard/Events"));
 
 const Router: () => React.ReactElement | null = () => {
   return useRoutes([
@@ -19,7 +18,7 @@ const Router: () => React.ReactElement | null = () => {
         { path: "*", element: <Navigate to={"/dashboard/app"} replace /> },
         { path: "app", element: <DashboardMain /> },
         { path: "profile", element: <DashboardMain /> },
-        { path: "events", element: <DashboardMain /> },
+        { path: "events", element: <DashboardEvents /> },
       ],
     },
     {
