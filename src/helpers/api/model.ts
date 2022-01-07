@@ -3,7 +3,20 @@ import { ID } from "@directus/sdk";
 
 type DirectusModel = {
   [API_TABLES.DIRECTUS_USERS]: UserModel;
+  [API_TABLES.PARTIES]: PartyModel;
 };
+
+type CollectionStatus = "published" | "archived" | "draft";
+
+export type PartyModel = {
+  id: ID;
+  name: string;
+  status: CollectionStatus;
+  date_created: string;
+  date_updated: string;
+};
+
+export type EventModel = PartyModel;
 
 export type UserModel = {
   id: ID;
