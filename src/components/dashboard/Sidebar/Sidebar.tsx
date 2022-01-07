@@ -1,14 +1,21 @@
 import { connect } from "react-redux";
 import MiHidden from "../../../uikit/MiHidden";
-import { Drawer, Link, Skeleton } from "@mui/material";
+import { Drawer, Link, ListItemText, Skeleton } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import { Link as RouterLink } from "react-router-dom";
-import { AccountStyle } from "./styled/Sidebar.styled";
+import { Link as RouterLink, useLocation } from "react-router-dom";
+import {
+  AccountStyle,
+  ListItemIconStyle,
+  ListItemStyled,
+} from "./styled/Sidebar.styled";
 import Avatar from "@mui/material/Avatar";
 import { userInfoSelector } from "../../../modules/user";
 import { DrawerContentPropsT, SidebarPropsT } from "./Sidebar.types";
 import Typography from "@mui/material/Typography";
+import List from "@mui/material/List";
+import sidebarMenu from "../../../helpers/menu/sidebarMenu";
+import { MenuItemT } from "../../../helpers/menu/menu.types";
 
 const SIDEBAR_WIDTH = 280;
 
@@ -20,6 +27,8 @@ const RootStyle = styled("div")(({ theme }) => ({
 }));
 
 const DrawerContentPure = ({ userInfo }: DrawerContentPropsT): JSX.Element => {
+  const location = useLocation();
+
   return (
     <>
       {userInfo ? (
@@ -57,6 +66,23 @@ const DrawerContentPure = ({ userInfo }: DrawerContentPropsT): JSX.Element => {
           <Skeleton variant={"rectangular"} height={72} />
         </Box>
       )}
+
+      <Box>
+        <List disablePadding>
+          {sidebarMenu.map((menuItem: MenuItemT) => (
+            <ListItemStyled
+              to={menuItem.link!}
+              key={menuItem.link!}
+              active={location.pathname === menuItem.link}
+            >
+              {menuItem.icon && (
+                <ListItemIconStyle>{menuItem.icon}</ListItemIconStyle>
+              )}
+              <ListItemText primary={menuItem.title} />
+            </ListItemStyled>
+          ))}
+        </List>
+      </Box>
     </>
   );
 };
