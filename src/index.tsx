@@ -41,11 +41,12 @@ declare global {
 ReactGA.initialize("G-LFX8QECN4V");
 ReactGA.send("pageview");
 
-Sentry.init({
-  dsn: "https://ebd88944e5894badb4f7f44760427571@o525460.ingest.sentry.io/6123029",
-  integrations: [new Integrations.BrowserTracing()],
-  tracesSampleRate: 1.0,
-});
+if (process.env.NODE_ENV === "production")
+  Sentry.init({
+    dsn: "https://ebd88944e5894badb4f7f44760427571@o525460.ingest.sentry.io/6123029",
+    integrations: [new Integrations.BrowserTracing()],
+    tracesSampleRate: 1.0,
+  });
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>
