@@ -63,7 +63,7 @@ function* signInRequestWorker({ payload }: AnyAction) {
     response: signInResponse,
     error: signInError,
   }: { response: AuthResult; error: any } = yield Api.getInstance()
-    .auth.login({
+    .login({
       email,
       password,
     })
