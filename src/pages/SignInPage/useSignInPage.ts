@@ -19,7 +19,7 @@ const useSignInPage = ({
   const handleFocus = useCallback(() => {
     if (!credentialsSuggested) {
       setCredentialsSuggested(true);
-      if (navigator.credentials)
+      if (navigator.credentials && window.PasswordCredential)
         navigator.credentials
           .get({
             // @ts-ignore
