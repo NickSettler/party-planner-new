@@ -1,7 +1,7 @@
 import { alpha, createTheme, responsiveFontSizes, Theme } from "@mui/material";
 import componentOverrides from "./overrides";
 import { Shadows } from "@mui/material/styles/shadows";
-import { CustomShadows } from "./theme.types";
+import { CustomShadows, Dashboard } from "./theme.types";
 
 const primaryLightColor = "#B5EDF8";
 const primaryMainColor = "#7BDFF2";
@@ -14,6 +14,7 @@ const secondaryDarkColor = "#DC2E85";
 declare module "@mui/system/createTheme" {
   interface Theme {
     customShadows: CustomShadows;
+    dashboard: Dashboard;
   }
 }
 
@@ -170,6 +171,17 @@ let theme = createTheme({
 
 theme.shadows = createShadows(theme.palette.grey["500"]);
 theme.customShadows = createCustomShadows(theme, theme.palette.grey["500"]);
+theme.dashboard = {
+  drawer: {
+    width: 280,
+  },
+  appBar: {
+    height: {
+      desktop: 92,
+      mobile: 64,
+    },
+  },
+};
 theme.components = componentOverrides(theme);
 theme = responsiveFontSizes(theme);
 

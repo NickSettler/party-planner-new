@@ -12,9 +12,12 @@ const RootStyle = styled("div")({
   display: "flex",
 });
 
-const MainStyle = styled("div")(() => ({
+const MainStyle = styled("div")(({ theme }) => ({
   minHeight: "100%",
   flexGrow: 1,
+  paddingTop: `calc(${
+    theme.dashboard.appBar.height.desktop
+  }px + ${theme.spacing(2)})`,
 }));
 
 const DashboardLayout = ({
