@@ -187,7 +187,6 @@ function* signOutRequestWorker() {
 
     yield put(setSignOutRequestCompleted(true));
   } catch (e) {
-    console.log(e);
     Sentry.captureException(e);
   } finally {
     yield put(setSignOutRequestStarted(false));
