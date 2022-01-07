@@ -6,9 +6,10 @@ import { styled } from "@mui/material/styles";
 
 const HeaderElement = styled("header")(({ theme }) => ({
   top: 0,
-  zIndex: 9,
+  right: 0,
+  zIndex: theme.zIndex.appBar + 1,
   lineHeight: 0,
-  width: "100%",
+  width: "auto",
   display: "flex",
   alignItems: "center",
   position: "absolute",
