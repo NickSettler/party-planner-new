@@ -33,6 +33,7 @@ import Api from "../../helpers/api";
 import { AuthResult } from "@directus/sdk";
 import { UserModel } from "../../helpers/api/model";
 import ReactGA from "react-ga4";
+import * as Sentry from "@sentry/react";
 
 export function* authSaga() {
   yield fork(authInitWorker);
@@ -185,6 +186,9 @@ function* signOutRequestWorker() {
       );
 
     yield put(setSignOutRequestCompleted(true));
+  } catch (e) {
+    console.log(e);
+    Sentry.captureException(e);
   } finally {
     yield put(setSignOutRequestStarted(false));
 
