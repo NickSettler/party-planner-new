@@ -166,25 +166,30 @@ function* signUpRequestWorker({ payload }: AnyAction) {
 }
 
 function* signOutRequestWorker() {
-  const isRequestRunning: boolean = yield select(signOutRequestStartedSelector);
-
-  if (isRequestRunning) return;
-
-  yield put(setSignOutRequestStarted(true));
-  yield put(setSignOutRequestCompleted(false));
-  yield put(setSignOutRequestError(""));
-
-  yield call(Api.getInstance().logout.bind(Api.getInstance()));
-
-  if (navigator.credentials)
-    yield call(
-      navigator.credentials.preventSilentAccess.bind(navigator.credentials)
+  try {
+    const isRequestRunning: boolean = yield select(
+      signOutRequestStartedSelector
     );
 
-  yield put(setSignOutRequestStarted(false));
-  yield put(setSignOutRequestCompleted(true));
+    if (isRequestRunning) return;
 
-  yield put(setUserId(false));
-  yield put(setUserToken(false));
-  yield put(setUserInfo(false));
+    yield put(setSignOutRequestStarted(true));
+    yield put(setSignOutRequestCompleted(false));
+    yield put(setSignOutRequestError(""));
+
+    yield call(Api.getInstance().logout.bind(Api.getInstance()));
+
+    if (navigator.credentials)
+      yield call(
+        navigator.credentials.preventSilentAccess.bind(navigator.credentials)
+      );
+
+    yield put(setSignOutRequestCompleted(true));
+  } finally {
+    yield put(setSignOutRequestStarted(false));
+
+    yield put(setUserId(false));
+    yield put(setUserToken(false));
+    yield put(setUserInfo(false));
+  }
 }
