@@ -19,6 +19,7 @@ const Router: () => React.ReactElement | null = () => {
         { path: "*", element: <Navigate to={"/dashboard/app"} replace /> },
         { path: "app", element: <DashboardMain /> },
         { path: "profile", element: <DashboardMain /> },
+        { path: "events", element: <DashboardMain /> },
       ],
     },
     {
