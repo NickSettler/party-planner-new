@@ -58,10 +58,9 @@ const useEventsCard = ({
   );
 
   useEffect(() => {
-    if (events.length === 0) {
-      runEventsRequest();
-    }
-  }, [events, runEventsRequest]);
+    runEventsRequest();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return {
     filteredEvents,
