@@ -80,8 +80,6 @@ const reducer = (
       if (eventIndex === -1) events.push(payload.event);
       else events[eventIndex] = payload.event;
 
-      console.log(payload.event, events);
-
       return {
         ...state,
         events,

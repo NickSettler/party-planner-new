@@ -46,7 +46,6 @@ export function* userSagaMiddlewareWorker(a: AnyAction) {
     const isTokenStored = !!localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_TOKEN);
 
     if (!isAuthActive && isTokenStored) {
-      console.log("Run sign out");
       a.payload.tasks.forEach((t: Task) => t.cancel());
       yield put({ type: authActionTypes.RUN_SIGN_OUT_REQUEST });
     }
