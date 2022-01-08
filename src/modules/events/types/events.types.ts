@@ -6,4 +6,8 @@ export type EventsModuleT = {
   eventsRequestStarted: boolean;
   eventsRequestCompleted: boolean;
   eventsRequestError: string;
+
+  eventRequestStarted: boolean;
+  eventRequestCompleted: boolean;
+  eventRequestError: string;
 };

@@ -2,6 +2,8 @@ import { EventsModuleState } from "./schema";
 import { AnyAction } from "@reduxjs/toolkit";
 import { actionTypes } from "./actions";
 import { EventsModuleT } from "./types/events.types";
+import { EventModel } from "../../helpers/api/model";
+import { reduce } from "lodash";
 
 const reducer = (
   state: EventsModuleT = EventsModuleState,
@@ -9,6 +11,10 @@ const reducer = (
 ) => {
   switch (type) {
     case actionTypes.RUN_EVENTS_REQUEST:
+      return {
+        ...state,
+      };
+    case actionTypes.RUN_EVENT_REQUEST:
       return {
         ...state,
       };
@@ -27,11 +33,61 @@ const reducer = (
         ...state,
         eventsRequestError: payload.error,
       };
-    case actionTypes.SET_EVENTS:
+    case actionTypes.SET_EVENT_REQUEST_STARTED:
       return {
         ...state,
-        events: payload.events,
+        eventRequestStarted: payload.started,
       };
+    case actionTypes.SET_EVENT_REQUEST_COMPLETED:
+      return {
+        ...state,
+        eventRequestCompleted: payload.completed,
+      };
+    case actionTypes.SET_EVENT_REQUEST_ERROR:
+      return {
+        ...state,
+        eventRequestError: payload.error,
+      };
+    case actionTypes.SET_EVENTS: {
+      const events = reduce(
+        payload.events,
+        (events: EventModel[], event: EventModel) => {
+          if (
+            state.events.findIndex(
+              (_event: EventModel) => event.id === _event.id
+            ) === -1
+          ) {
+            events.push(event);
+          }
+
+          return events;
+        },
+        state.events
+      );
+
+      return {
+        ...state,
+        events: JSON.parse(JSON.stringify(events)),
+      };
+    }
+    case actionTypes.MERGE_EVENT: {
+      const events = state.events;
+
+      const eventIndex = events.findIndex(
+        (event: EventModel) => event.id === payload.event.id
+      );
+
+      if (eventIndex === -1) events.push(payload.event);
+      else events[eventIndex] = payload.event;
+
+      console.log(payload.event, events);
+
+      return {
+        ...state,
+        events,
+      };
+    }
+
     default:
       return state;
   }

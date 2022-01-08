@@ -5,4 +5,7 @@ export const EventsModuleState: EventsModuleT = {
   eventsRequestCompleted: false,
   eventsRequestError: "",
   eventsRequestStarted: false,
+  eventRequestStarted: false,
+  eventRequestCompleted: false,
+  eventRequestError: "",
 };
