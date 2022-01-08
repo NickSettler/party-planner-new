@@ -73,7 +73,7 @@ const DrawerContentPure = ({ userInfo }: DrawerContentPropsT): JSX.Element => {
             <ListItemStyled
               to={menuItem.link!}
               key={menuItem.link!}
-              active={location.pathname === menuItem.link}
+              active={location.pathname.startsWith(menuItem.link!)}
             >
               {menuItem.icon && (
                 <ListItemIconStyle>{menuItem.icon}</ListItemIconStyle>
