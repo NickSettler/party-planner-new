@@ -1,5 +1,5 @@
 import { API_TABLES } from "./consts";
-import { ID } from "@directus/sdk";
+import { ID, ManyItems } from "@directus/sdk";
 
 type DirectusModel = {
   [API_TABLES.DIRECTUS_USERS]: UserModel;
@@ -12,8 +12,14 @@ export type PartyModel = {
   id: ID;
   name: string;
   status: CollectionStatus;
+  sort: number;
+  user_created: ID;
+  user_updated: ID;
   date_created: string;
   date_updated: string;
+  people: ManyItems<any>;
+  goods: ID[];
+  members: ID[];
 };
 
 export type EventModel = PartyModel;
