@@ -19,6 +19,7 @@ const Router: () => React.ReactElement | null = () => {
         { path: "app", element: <DashboardMain /> },
         { path: "profile", element: <DashboardMain /> },
         { path: "events", element: <DashboardEvents /> },
+        { path: "events/*", element: <DashboardEvents /> },
       ],
     },
     {
