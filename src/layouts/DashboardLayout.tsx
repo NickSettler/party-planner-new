@@ -14,6 +14,7 @@ const RootStyle = styled("div")({
 
 const MainStyle = styled("div")(({ theme }) => ({
   minHeight: "100%",
+  width: "100%",
   flexGrow: 1,
   paddingTop: `calc(${
     theme.dashboard.appBar.height.desktop
