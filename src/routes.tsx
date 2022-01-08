@@ -8,6 +8,7 @@ import DashboardLayout from "./layouts/DashboardLayout";
 
 const DashboardMain = lazy(() => import("./pages/dashboard/Main"));
 const DashboardEvents = lazy(() => import("./pages/dashboard/Events"));
+const DashboardEvent = lazy(() => import("./pages/dashboard/Event"));
 
 const Router: () => React.ReactElement | null = () => {
   return useRoutes([
@@ -19,7 +20,8 @@ const Router: () => React.ReactElement | null = () => {
         { path: "app", element: <DashboardMain /> },
         { path: "profile", element: <DashboardMain /> },
         { path: "events", element: <DashboardEvents /> },
-        { path: "events/*", element: <DashboardEvents /> },
+        { path: "events/:id", element: <DashboardEvent /> },
+        { path: "events/:id/:tab", element: <DashboardEvent /> },
       ],
     },
     {
