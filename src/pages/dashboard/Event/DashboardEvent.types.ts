@@ -8,6 +8,7 @@ export type DashboardEventPropsT = {
 };
 
 export type DashboardEventHookT = {
+  currentEvent: EventModel;
   tabValue: number;
   handleTabClick: (e: React.SyntheticEvent, v: number) => void;
 };

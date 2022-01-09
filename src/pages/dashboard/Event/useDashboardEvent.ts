@@ -5,14 +5,25 @@ import {
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { generateEventLink } from "../../../helpers/menu/eventMenu";
+import { EventModel } from "../../../helpers/api/model";
 
 const useDashboardEvent = ({
+  events,
   runEventRequest,
 }: DashboardEventPropsT): DashboardEventHookT => {
-  const [tabValue, setTabValue] = useState<number>(0);
-
   const params = useParams();
   const navigate = useNavigate();
+
+  const [tabValue, setTabValue] = useState<number>(0);
+  const [currentEvent, setCurrentEvent] = useState<EventModel>(
+    events.find((event: EventModel) => ~~event.id === ~~params.id!)!
+  );
+
+  useEffect(() => {
+    setCurrentEvent(
+      events.find((event: EventModel) => ~~event.id === ~~params.id!)!
+    );
+  }, [events, params.id]);
 
   useEffect(() => {
     runEventRequest(params.id!);
@@ -32,6 +43,7 @@ const useDashboardEvent = ({
   );
 
   return {
+    currentEvent,
     tabValue,
     handleTabClick,
   };

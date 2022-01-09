@@ -14,12 +14,29 @@ import eventTabMenu from "../../../helpers/menu/eventMenu";
 import { MenuItemT } from "../../../helpers/menu/menu.types";
 import TabPanel from "../../../uikit/TabPanel";
 import EventHomeTab from "../../../components/dashboard/EventHomeTab";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Skeleton from "@mui/material/Skeleton";
+import { useTheme } from "@mui/material/styles";
 
 const DashboardEvent = (props: DashboardEventPropsT): JSX.Element => {
-  const { tabValue, handleTabClick } = useDashboardEvent(props);
+  const { currentEvent, tabValue, handleTabClick } = useDashboardEvent(props);
+
+  const theme = useTheme();
 
   return (
     <Stack>
+      <Box sx={{ py: 2, px: 2.5 }}>
+        {currentEvent ? (
+          <Typography variant={"h5"}>{currentEvent?.name}</Typography>
+        ) : (
+          <Skeleton
+            variant={"rectangular"}
+            width={"25%"}
+            height={`calc(${theme.typography.h5.fontSize} * ${theme.typography.h5.lineHeight})`}
+          />
+        )}
+      </Box>
       <Tabs value={tabValue} onChange={handleTabClick}>
         {eventTabMenu.map((menuItem: MenuItemT) => (
           <Tab key={menuItem.title} label={menuItem.title} disableRipple />
