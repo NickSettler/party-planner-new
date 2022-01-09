@@ -3,7 +3,7 @@ import { AnyAction } from "@reduxjs/toolkit";
 import { actionTypes } from "./actions";
 import { EventsModuleT } from "./types/events.types";
 import { EventModel } from "../../helpers/api/model";
-import { reduce } from "lodash";
+import { cloneDeep, reduce } from "lodash";
 
 const reducer = (
   state: EventsModuleT = EventsModuleState,
@@ -67,7 +67,7 @@ const reducer = (
 
       return {
         ...state,
-        events: JSON.parse(JSON.stringify(events)),
+        events: cloneDeep(events),
       };
     }
     case actionTypes.MERGE_EVENT: {
@@ -82,7 +82,7 @@ const reducer = (
 
       return {
         ...state,
-        events,
+        events: cloneDeep(events),
       };
     }
 
