@@ -80,7 +80,7 @@ export function* eventRequestWorker({ payload }: AnyAction) {
               _eq: eventId,
             },
           },
-          fields: "*.*",
+          fields: "*.*.*",
         })
         .then((response) => ({ response }))
         .catch((error) => ({ error }));
