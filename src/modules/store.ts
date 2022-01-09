@@ -8,6 +8,7 @@ import createSagaMiddleware from "redux-saga";
 import authReducer, { moduleName as authModuleName } from "./auth";
 import userReducer, { moduleName as userModuleName } from "./user";
 import eventsReducer, { moduleName as eventsModuleName } from "./events";
+import membersReducer, { moduleName as membersModuleName } from "./members";
 import rootSaga from "./saga";
 
 const sagaMiddleware = createSagaMiddleware();
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   [authModuleName]: authReducer,
   [userModuleName]: userReducer,
   [eventsModuleName]: eventsReducer,
+  [membersModuleName]: membersReducer,
 });
 
 const store = createStore(rootReducer, enhancer);
