@@ -3,7 +3,7 @@ import { AnyAction } from "@reduxjs/toolkit";
 import { actionTypes } from "./actions";
 import { EventsModuleT } from "./types/events.types";
 import { EventModel } from "../../helpers/api/model";
-import { cloneDeep, reduce } from "lodash";
+import { cloneDeep } from "lodash";
 
 const reducer = (
   state: EventsModuleT = EventsModuleState,
