@@ -19,7 +19,7 @@ import { ManyItems } from "@directus/sdk";
 import { EventModel } from "../../helpers/api/model";
 import { AnyAction } from "@reduxjs/toolkit";
 import { eventsSelector, setEvents } from "../events";
-import { cloneDeep } from "lodash";
+import { cloneDeep, intersectionBy } from "lodash";
 import { API_TABLES } from "../../helpers/api/consts";
 import { Channel } from "redux-saga";
 
@@ -63,11 +63,27 @@ export function* memberStatusChangeWorker({ payload }: AnyAction) {
 
     yield put(setEvents(events));
 
+    const newMembersStatuses = event.members.map((member) => ({
+      id: member.id,
+      came: member.came,
+    }));
+
+    const initialMembersStatuses = initialEvents[eventIndex].members.map(
+      (member) => ({
+        id: member.id,
+        came: member.came,
+      })
+    );
+
     const { error }: { response: ManyItems<EventModel>; error: any } =
       yield Api.getInstance()
         .items(API_TABLES.PARTIES)
         .updateOne(eventId, {
-          members: event.members,
+          members: intersectionBy(
+            newMembersStatuses,
+            initialMembersStatuses,
+            "id"
+          ),
         })
         .then((response) => ({ response }))
         .catch((error) => ({ error }));
