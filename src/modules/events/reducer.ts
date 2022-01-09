@@ -49,25 +49,9 @@ const reducer = (
         eventRequestError: payload.error,
       };
     case actionTypes.SET_EVENTS: {
-      const events = reduce(
-        payload.events,
-        (events: EventModel[], event: EventModel) => {
-          if (
-            state.events.findIndex(
-              (_event: EventModel) => event.id === _event.id
-            ) === -1
-          ) {
-            events.push(event);
-          }
-
-          return events;
-        },
-        state.events
-      );
-
       return {
         ...state,
-        events: cloneDeep(events),
+        events: cloneDeep(payload.events),
       };
     }
     case actionTypes.MERGE_EVENT: {
