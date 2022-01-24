@@ -8,6 +8,7 @@ import theme from "./helpers/theme/theme";
 import * as Sentry from "@sentry/react";
 import { Integrations } from "@sentry/tracing";
 import ReactGA from "react-ga4";
+import FirebaseHelper from "./helpers/firebase";
 
 declare global {
   interface PasswordCredentialData {
@@ -47,6 +48,8 @@ if (process.env.NODE_ENV === "production")
     integrations: [new Integrations.BrowserTracing()],
     tracesSampleRate: 1.0,
   });
+
+FirebaseHelper.getInstance().init();
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>
