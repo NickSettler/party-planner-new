@@ -13,10 +13,16 @@ import {
   setMemberStatusChangeCompleted,
   setMemberStatusChangeError,
   setMemberStatusChangeStarted,
+  setMemberUpdateRequestCompleted,
+  setMemberUpdateRequestError,
+  setMemberUpdateRequestStarted,
 } from ".";
 import Api from "../../helpers/api";
-import { ManyItems } from "@directus/sdk";
-import { EventModel } from "../../helpers/api/model";
+import { ManyItems, OneItem } from "@directus/sdk";
+import {
+  EventModel,
+  PartiesToDirectusUsersModel,
+} from "../../helpers/api/model";
 import { AnyAction } from "@reduxjs/toolkit";
 import { eventsSelector, setEvents } from "../events";
 import { cloneDeep, intersectionBy } from "lodash";
@@ -26,7 +32,7 @@ import { Channel } from "redux-saga";
 export function* membersSaga() {
   yield all([takeEvery(actionTypes.RUN_MEMBERS_REQUEST, membersRequestWorker)]);
 
-  yield fork(membersStatusSaga);
+  yield all([fork(membersStatusSaga), fork(membersUpdateRequestSaga)]);
 }
 
 export function* membersStatusSaga() {
@@ -37,6 +43,17 @@ export function* membersStatusSaga() {
   while (true) {
     const action: AnyAction = yield take(channel);
     yield call(memberStatusChangeWorker, action);
+  }
+}
+
+export function* membersUpdateRequestSaga() {
+  const channel: Channel<any> = yield actionChannel(
+    actionTypes.RUN_MEMBER_UPDATE_REQUEST
+  );
+
+  while (true) {
+    const action: AnyAction = yield take(channel);
+    yield call(memberUpdateRequestWorker, action);
   }
 }
 
@@ -96,5 +113,59 @@ export function* memberStatusChangeWorker({ payload }: AnyAction) {
     }
   } finally {
     yield put(setMemberStatusChangeStarted(false));
+  }
+}
+
+export function* memberUpdateRequestWorker({ payload }: AnyAction) {
+  const { memberInfo }: { memberInfo: PartiesToDirectusUsersModel } = payload;
+  const { id, role, came, parties_id } = memberInfo;
+  const eventId = parties_id.id;
+
+  try {
+    yield put(setMemberUpdateRequestStarted(true));
+    yield put(setMemberUpdateRequestCompleted(false));
+    yield put(setMemberUpdateRequestError(""));
+
+    const {
+      response,
+      error,
+    }: {
+      response: OneItem<PartiesToDirectusUsersModel<"API">>;
+      error: any;
+    } = yield Api.getInstance()
+      .items(API_TABLES.PARTIES_DIRECTUS_USERS)
+      .updateOne(id, {
+        came,
+        role,
+      })
+      .then((response) => ({
+        response,
+      }))
+      .catch((error) => ({ error }));
+
+    if (error) {
+      yield put(setMemberUpdateRequestError("Error updating member"));
+    } else {
+      yield put(setMemberUpdateRequestCompleted(true));
+      const events: Array<EventModel> = yield select(eventsSelector);
+      const eventIndex = events.findIndex((event) => event.id === ~~eventId)!;
+      const event = events[eventIndex];
+
+      event.members = event.members.map((member) => {
+        if (member.id === id && response) {
+          member.role = response.role || member.role;
+          member.came =
+            typeof response.came === "boolean" ? response.came : member.came;
+        }
+
+        return member;
+      });
+
+      events[eventIndex] = cloneDeep(event);
+
+      yield put(setEvents(events));
+    }
+  } finally {
+    yield put(setMemberUpdateRequestStarted(false));
   }
 }
