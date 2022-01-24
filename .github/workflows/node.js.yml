@@ -32,6 +32,8 @@ jobs:
       - name: Run build task
         run: |
           export REACT_APP_API_URL=${{ secrets.REACT_APP_API_URL }}
+          export REACT_APP_EMSI_CLIENT_ID=${{ secrets.REACT_APP_EMSI_CLIENT_ID }}
+          export REACT_APP_EMSI_CLIENT_SECRET=${{ secrets.REACT_APP_EMSI_CLIENT_SECRET }}
           npm run build
       - name: Save build
         uses: actions/upload-artifact@master
