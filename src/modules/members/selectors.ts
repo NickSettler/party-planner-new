@@ -71,3 +71,42 @@ export const memberStatusChangeFailedSelector = createSelector(
   (state: MembersModuleT) =>
     !state.memberStatusChangeStarted && state.memberStatusChangeError
 );
+
+export const memberUpdateRequestStartedSelector = createSelector(
+  membersModule,
+  (state: MembersModuleT) => state.memberUpdateRequestStarted
+);
+
+export const memberUpdateRequestCompletedSelector = createSelector(
+  membersModule,
+  (state: MembersModuleT) => state.memberUpdateRequestCompleted
+);
+
+export const memberUpdateRequestErrorSelector = createSelector(
+  membersModule,
+  (state: MembersModuleT) => state.memberUpdateRequestError
+);
+
+export const memberUpdateRequestLoadingSelector = createSelector(
+  membersModule,
+  (state: MembersModuleT) =>
+    state.memberUpdateRequestStarted &&
+    !(state.memberUpdateRequestCompleted || state.memberUpdateRequestError)
+);
+
+export const memberUpdateRequestSuccessSelector = createSelector(
+  membersModule,
+  (state: MembersModuleT) =>
+    !state.memberUpdateRequestStarted && state.memberUpdateRequestCompleted
+);
+
+export const memberUpdateRequestFailedSelector = createSelector(
+  membersModule,
+  (state: MembersModuleT) =>
+    !state.memberUpdateRequestStarted && state.memberUpdateRequestError
+);
+
+export const memberModalIdSelector = createSelector(
+  membersModule,
+  (state: MembersModuleT) => state.memberModalId
+);

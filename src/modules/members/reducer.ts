@@ -12,6 +12,11 @@ const reducer = (
       return {
         ...state,
       };
+    case actionTypes.RUN_MEMBER_UPDATE_REQUEST: {
+      return {
+        ...state,
+      };
+    }
 
     case actionTypes.SET_MEMBERS_REQUEST_STARTED:
       return {
@@ -47,6 +52,30 @@ const reducer = (
       return {
         ...state,
         memberStatusChangeError: payload.error,
+      };
+
+    case actionTypes.SET_MEMBER_UPDATE_REQUEST_STARTED:
+      return {
+        ...state,
+        memberUpdateRequestStarted: payload.started,
+      };
+
+    case actionTypes.SET_MEMBER_UPDATE_REQUEST_COMPLETED:
+      return {
+        ...state,
+        memberUpdateRequestCompleted: payload.completed,
+      };
+
+    case actionTypes.SET_MEMBER_UPDATE_REQUEST_ERROR:
+      return {
+        ...state,
+        memberUpdateRequestError: payload.error,
+      };
+
+    case actionTypes.SET_MEMBER_MODAL_ID:
+      return {
+        ...state,
+        memberModalId: `${payload.id}`,
       };
 
     default:

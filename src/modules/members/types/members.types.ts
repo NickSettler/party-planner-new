@@ -6,4 +6,10 @@ export type MembersModuleT = {
   memberStatusChangeStarted: boolean;
   memberStatusChangeCompleted: boolean;
   memberStatusChangeError: string;
+
+  memberUpdateRequestStarted: boolean;
+  memberUpdateRequestCompleted: boolean;
+  memberUpdateRequestError: string;
+
+  memberModalId: string;
 };

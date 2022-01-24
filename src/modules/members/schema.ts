@@ -8,4 +8,10 @@ export const EventsModuleState: MembersModuleT = {
   memberStatusChangeStarted: false,
   memberStatusChangeCompleted: false,
   memberStatusChangeError: "",
+
+  memberUpdateRequestStarted: false,
+  memberUpdateRequestCompleted: false,
+  memberUpdateRequestError: "",
+
+  memberModalId: "",
 };
