@@ -32,7 +32,7 @@ const useMemberModal = ({
 
   const firebaseAppRef = useRef<FirebaseApp>(FirebaseHelper.getInstance().app);
 
-  const [useRolesAutocomplete, setUseRolesAutocomplete] = useState<boolean>(
+  const [useRolesAutocomplete] = useState<boolean>(
     getValue(
       getRemoteConfig(firebaseAppRef.current),
       "use_roles_autocomplete"
@@ -47,7 +47,7 @@ const useMemberModal = ({
 
   const [initialRole, setInitialRole] = useState<string>(currentMember?.role!);
   const [initialCame, setInitialCame] = useState<boolean>(currentMember?.came!);
-  const [hasChanges, setHasChanges] = useState<boolean>(false);
+  const [, setHasChanges] = useState<boolean>(false);
 
   const [isOpen, setIsOpen] = useState<boolean>(isOpenProp);
   const [jobTitles, setJobTitles] = useState<EMSIJob[]>([]);
