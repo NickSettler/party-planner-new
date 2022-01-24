@@ -4,7 +4,9 @@ import { ID, ManyItems } from "@directus/sdk";
 type DirectusModel = {
   [API_TABLES.DIRECTUS_USERS]: UserModel;
   [API_TABLES.PARTIES]: PartyModel;
-  [API_TABLES.PARTIES_DIRECTUS_USERS]: PartiesToDirectusUsersModel;
+  [API_TABLES.PARTIES_DIRECTUS_USERS]:
+    | PartiesToDirectusUsersModel<"API">
+    | PartiesToDirectusUsersModel;
 };
 
 export type PartiesToDirectusUsersModel<S extends "API" | "WEB" = "WEB"> = {
@@ -12,6 +14,7 @@ export type PartiesToDirectusUsersModel<S extends "API" | "WEB" = "WEB"> = {
   directus_users_id: S extends "API" ? ID : S extends "WEB" ? UserModel : never;
   parties_id: S extends "API" ? ID : S extends "WEB" ? PartyModel<S> : never;
   came: boolean;
+  role: string;
 };
 
 type CollectionStatus = "published" | "archived" | "draft";

@@ -45,4 +45,8 @@ export default class Api extends Directus<DirectusModel> {
       localStorage.removeItem(LOCAL_STORAGE_KEYS.AUTH_REFRESH_TOKEN);
     });
   }
+
+  static get url(): string {
+    return Api._baseUrl;
+  }
 }
