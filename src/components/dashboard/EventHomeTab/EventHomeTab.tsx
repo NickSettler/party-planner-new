@@ -14,13 +14,23 @@ import Skeleton from "@mui/material/Skeleton";
 import List from "@mui/material/List";
 import Checkbox from "@mui/material/Checkbox";
 import Fade from "@mui/material/Fade";
-import ListItem from "@mui/material/ListItem";
 import ListItemSecondaryAction from "@mui/material/ListItemSecondaryAction";
 import ListItemText from "@mui/material/ListItemText";
-import { setMemberCameStatus } from "../../../modules/members";
+import {
+  memberModalIdSelector,
+  setMemberCameStatus,
+  setMemberModalId,
+} from "../../../modules/members";
+import MemberModal from "../MemberModal/MemberModal";
+import ListItemButton from "@mui/material/ListItemButton";
+import Stack from "@mui/material/Stack";
+import React from "react";
 
 const EventHomeTab = (props: EventHomeTabPropsT): JSX.Element => {
-  const { currentEvent, handleMemberCheckboxClick } = useEventHomeTab(props);
+  const { memberModalId } = props;
+
+  const { currentEvent, handleMemberCheckboxClick, handleMemberItemClick } =
+    useEventHomeTab(props);
 
   return (
     <Container sx={{ mt: 4 }}>
@@ -47,7 +57,7 @@ const EventHomeTab = (props: EventHomeTabPropsT): JSX.Element => {
               </IconButton>
             }
           />
-          <CardContent>
+          <CardContent sx={{ px: 0 }}>
             <List disablePadding>
               {typeof currentEvent?.members?.[0] === "object" &&
                 currentEvent.members.map((member, i) => {
@@ -60,26 +70,46 @@ const EventHomeTab = (props: EventHomeTabPropsT): JSX.Element => {
                     return <li key={i} />;
                   return (
                     <Fade in timeout={1500} key={member?.directus_users_id?.id}>
-                      <ListItem disablePadding>
-                        <ListItemText
-                          primary={`
+                      <Stack direction={"row"}>
+                        <ListItemButton
+                          sx={(theme) => ({ paddingLeft: theme.spacing(3) })}
+                          onClick={(e) => {
+                            handleMemberItemClick(
+                              e,
+                              member.directus_users_id.id
+                            );
+                          }}
+                        >
+                          <ListItemText
+                            primary={`
                       ${member.directus_users_id.first_name || ""} ${
-                            member.directus_users_id.last_name || ""
-                          }`}
-                        />
-                        <ListItemSecondaryAction sx={{ right: 0 }}>
-                          <Checkbox
-                            sx={{ right: -9 }}
-                            checked={member.came}
-                            onChange={(e) =>
-                              handleMemberCheckboxClick(
-                                e,
-                                member.directus_users_id.id
-                              )
-                            }
+                              member.directus_users_id.last_name || ""
+                            }`}
                           />
-                        </ListItemSecondaryAction>
-                      </ListItem>
+                          <ListItemSecondaryAction
+                            sx={(theme) => ({ right: theme.spacing(3) })}
+                          >
+                            <Checkbox
+                              sx={{ right: -9 }}
+                              checked={member.came}
+                              disableRipple
+                              onClick={(e) => {
+                                e.stopPropagation();
+                              }}
+                              onChange={(e) => {
+                                e.stopPropagation();
+                                e.nativeEvent.stopImmediatePropagation();
+
+                                handleMemberCheckboxClick(
+                                  e,
+                                  member.directus_users_id.id
+                                );
+                              }}
+                              onMouseDown={(e) => e.stopPropagation()}
+                            />
+                          </ListItemSecondaryAction>
+                        </ListItemButton>
+                      </Stack>
                     </Fade>
                   );
                 })}
@@ -87,12 +117,14 @@ const EventHomeTab = (props: EventHomeTabPropsT): JSX.Element => {
           </CardContent>
         </Card>
       </Masonry>
+      <MemberModal isOpen={!!memberModalId} />
     </Container>
   );
 };
 
 const mapStateToProps = (state: any) => ({
   events: eventsSelector(state),
+  memberModalId: memberModalIdSelector(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -101,6 +133,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     memberId: string | number,
     came: boolean
   ) => dispatch(setMemberCameStatus(eventId, memberId, came)),
+  setMemberModalId: (id: string | number) => dispatch(setMemberModalId(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventHomeTab);

@@ -1,11 +1,12 @@
 import { EventHomeTabHookT, EventHomeTabPropsT } from "./EventHomeTab.types";
 import { EventModel } from "../../../helpers/api/model";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const useEventHomeTab = ({
   events,
   setMemberCameStatus,
+  setMemberModalId,
 }: EventHomeTabPropsT): EventHomeTabHookT => {
   const params = useParams();
 
@@ -17,11 +18,19 @@ const useEventHomeTab = ({
     setCurrentEvent(events.find((event) => ~~event.id === ~~params.id!)!);
   }, [events, params.id]);
 
+  const handleMemberItemClick = useCallback(
+    (e: React.MouseEvent, id: string | number) => {
+      e.stopPropagation();
+      setMemberModalId(id);
+    },
+    [setMemberModalId]
+  );
+
   const handleMemberCheckboxClick = (
     e: React.ChangeEvent<HTMLInputElement>,
     memberId: string | number
   ) => {
-    const { checked } = e.target;
+    const { checked } = e.target as HTMLInputElement;
 
     setMemberCameStatus(params.id!, `${memberId}`, checked);
   };
@@ -29,6 +38,7 @@ const useEventHomeTab = ({
   return {
     currentEvent,
     handleMemberCheckboxClick,
+    handleMemberItemClick,
   };
 };
 

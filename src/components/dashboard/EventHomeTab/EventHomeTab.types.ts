@@ -8,6 +8,8 @@ export type EventHomeTabPropsT = {
     memberId: string,
     status: boolean
   ) => void;
+  memberModalId: string;
+  setMemberModalId: (id: string | number) => void;
 };
 
 export type EventHomeTabHookT = {
@@ -16,4 +18,5 @@ export type EventHomeTabHookT = {
     e: React.ChangeEvent<HTMLInputElement>,
     memberId: string | number
   ) => void;
+  handleMemberItemClick: (e: React.MouseEvent, id: string | number) => void;
 };
