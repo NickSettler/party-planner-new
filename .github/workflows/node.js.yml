@@ -34,6 +34,7 @@ jobs:
           export REACT_APP_API_URL=${{ secrets.REACT_APP_API_URL }}
           export REACT_APP_EMSI_CLIENT_ID=${{ secrets.REACT_APP_EMSI_CLIENT_ID }}
           export REACT_APP_EMSI_CLIENT_SECRET=${{ secrets.REACT_APP_EMSI_CLIENT_SECRET }}
+          export REACT_APP_MAPBOX_TOKEN=${{ secrets.REACT_APP_MAPBOX_TOKEN }}
           npm run build
       - name: Save build
         uses: actions/upload-artifact@master
