@@ -25,6 +25,7 @@ import MemberModal from "../MemberModal/MemberModal";
 import ListItemButton from "@mui/material/ListItemButton";
 import Stack from "@mui/material/Stack";
 import React from "react";
+import EventDetailsCard from "../EventDetailsCard/EventDetailsCard";
 
 const EventHomeTab = (props: EventHomeTabPropsT): JSX.Element => {
   const { memberModalId } = props;
@@ -34,7 +35,18 @@ const EventHomeTab = (props: EventHomeTabPropsT): JSX.Element => {
 
   return (
     <Container sx={{ mt: 4 }}>
-      <Masonry columns={{ xs: 1, sm: 3 }}>
+      <Masonry
+        columns={{ xs: 1, sm: 2 }}
+        spacing={{ xs: 0, sm: 3 }}
+        sx={(theme) => ({
+          "& > .MuiCard-root": {
+            [theme.breakpoints.down("sm")]: {
+              marginBottom: theme.spacing(3),
+            },
+          },
+        })}
+      >
+        <EventDetailsCard />
         <Card>
           <CardHeader
             title={currentEvent ? "Members" : <Skeleton width={"100%"} />}
