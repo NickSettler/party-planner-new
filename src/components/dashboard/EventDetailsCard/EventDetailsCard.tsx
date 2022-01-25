@@ -14,6 +14,9 @@ import { eventsSelector } from "../../../modules/events";
 import IconButton from "@mui/material/IconButton";
 import Navigation from "@mui/icons-material/Navigation";
 import Skeleton from "@mui/material/Skeleton";
+import "moment/locale/ru";
+import "moment/locale/cs";
+import moment from "moment/moment";
 
 const EventDetailsCard = (props: EventDetailsCardProps): JSX.Element => {
   const { mapImageUrl, addressInfo, currentEvent } = useEventDetailsCard(props);
@@ -27,7 +30,9 @@ const EventDetailsCard = (props: EventDetailsCardProps): JSX.Element => {
             <Stack direction={"row"} gap={1} alignItems={"center"}>
               <Event color={"primary"} />
               <Typography variant={"body1"}>
-                {new Date(currentEvent.datetime).toLocaleString()}
+                {moment(new Date(currentEvent.datetime))
+                  .locale(navigator.language)
+                  .format("LLL")}
               </Typography>
             </Stack>
           )}
