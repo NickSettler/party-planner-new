@@ -9,6 +9,11 @@ type DirectusModel = {
     | PartiesToDirectusUsersModel;
 };
 
+export type DirectionLocation = {
+  type: "Point";
+  coordinates: [number, number];
+};
+
 export type PartiesToDirectusUsersModel<S extends "API" | "WEB" = "WEB"> = {
   id: ID;
   directus_users_id: S extends "API" ? ID : S extends "WEB" ? UserModel : never;
@@ -35,6 +40,8 @@ export type PartyModel<S extends "API" | "WEB" = "WEB"> = {
     : S extends "WEB"
     ? PartiesToDirectusUsersModel[]
     : never;
+  location?: DirectionLocation;
+  datetime?: string;
 };
 
 export type EventModel<S extends "API" | "WEB" = "WEB"> = PartyModel<S>;
