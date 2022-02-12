@@ -39,7 +39,7 @@ const AccountDropdown = (props: AccountDropdownPropsT): JSX.Element => {
       >
         <Avatar
           src={
-            userInfo
+            userInfo && userInfo.avatar
               ? `${process.env.REACT_APP_API_URL}/assets/${userInfo.avatar}?key=64-64`
               : ""
           }

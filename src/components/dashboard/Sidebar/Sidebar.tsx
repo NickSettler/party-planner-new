@@ -40,7 +40,11 @@ const DrawerContentPure = ({ userInfo }: DrawerContentPropsT): JSX.Element => {
           >
             <AccountStyle>
               <Avatar
-                src={`${process.env.REACT_APP_API_URL}/assets/${userInfo.avatar}?key=64-64`}
+                src={
+                  userInfo.avatar
+                    ? `${process.env.REACT_APP_API_URL}/assets/${userInfo.avatar}?key=64-64`
+                    : ""
+                }
                 sizes={"40px"}
                 variant={"circular"}
                 alt={"Profile photo"}
