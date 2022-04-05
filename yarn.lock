@@ -1105,10 +1105,10 @@
   dependencies:
     "@date-io/core" "^2.11.0"
 
-"@directus/sdk@^9.4.0":
-  version "9.4.3"
-  resolved "https://registry.yarnpkg.com/@directus/sdk/-/sdk-9.4.3.tgz#06237edcc55152d210ece50e86cf795f7f94b3f0"
-  integrity sha512-iV9K0fE1IkygP+4MLBlw1DTyHOaYvPswX3pVLuZ8pBMYN31PMn8iY9nLESXOcRfox5v+7+QWcLnQvTKv0Bqv9w==
+"@directus/sdk@^9.8.0":
+  version "9.8.0"
+  resolved "https://registry.yarnpkg.com/@directus/sdk/-/sdk-9.8.0.tgz#3118e54885673504ba429c02ec77533480fcf98f"
+  integrity sha512-N0ZO2bBSVFYnWmpcQPz1YFL/MAv+ILukFojaf9t4muBQjTUoQzLEySHzETs11XfmDvsh8nSOhS7Hl+JBH5ZxoA==
   dependencies:
     axios "^0.24.0"
 

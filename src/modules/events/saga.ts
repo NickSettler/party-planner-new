@@ -39,7 +39,7 @@ export function* eventsRequestWorker() {
     const { response, error }: { response: ManyItems<EventModel>; error: any } =
       yield Api.getInstance()
         .items("parties")
-        .readMany({
+        .readByQuery({
           filter: {
             status: "published",
           },
@@ -73,7 +73,7 @@ export function* eventRequestWorker({ payload }: AnyAction) {
     const { response, error }: { response: ManyItems<EventModel>; error: any } =
       yield Api.getInstance()
         .items("parties")
-        .readMany({
+        .readByQuery({
           filter: {
             status: "published",
             id: {
